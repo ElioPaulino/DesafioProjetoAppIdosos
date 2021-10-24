@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_desafio_elio_lucas/view/calendario.dart';
+import 'package:projeto_desafio_elio_lucas/view/menu.dart';
 
 void main() async {
   runApp(MaterialApp(
@@ -9,6 +11,8 @@ void main() async {
     initialRoute: '/primeira',
     routes: {
       '/primeira': (context) => PrimeiraTela(),
+      '/menu':(context) => HomeState(),
+      '/calendario':(context) => Calendario()
     },
     //Tema
     theme: ThemeData(
@@ -94,6 +98,7 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
                     onPressed: () {
                       setState(() {
                         //
+                        Navigator.pushNamed(context, '/menu');
                       });
 
                     },
