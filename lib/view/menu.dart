@@ -47,7 +47,7 @@ class _HomeState extends State<HomeState> {
               decoration: BoxDecoration(
                   borderRadius:
                       BorderRadius.circular(clickedCentreFAB ? 0.0 : 300.0),
-                  color: Colors.purple[800]),
+                  ),
             ),
           )
         ],

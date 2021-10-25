@@ -98,7 +98,7 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
                     onPressed: () {
                       setState(() {
                         //
-                        Navigator.pushNamed(context, '/menu');
+                        Navigator.pushReplacementNamed(context, '/menu');
                       });
 
                     },
