@@ -1,64 +1,113 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_desafio_elio_lucas/view/calendario.dart';
+import 'package:projeto_desafio_elio_lucas/view/menu.dart';
 
-void main() {
-  runApp(MyApp());
-}
-//Commit de teste
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+void main() async {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Hora do Remédio',
+
+    //ROTAS DE NAVEGAÇÃO
+    initialRoute: '/primeira',
+    routes: {
+      '/primeira': (context) => PrimeiraTela(),
+      '/menu': (context) => HomeState(),
+      '/calendario': (context) => Calendario()
+    },
+    //Tema
+    theme: ThemeData(
+      primaryColor: Colors.purple[800],
+      backgroundColor: Colors.purple[800],
+      fontFamily: 'Roboto', //Raleway
+      textTheme: TextTheme(
+        headline1: TextStyle(fontSize: 30),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+    ),
+  ));
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+class PrimeiraTela extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _PrimeiraTelaState createState() => _PrimeiraTelaState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class _PrimeiraTelaState extends State<PrimeiraTela> {
+  var txtLogin = TextEditingController();
+  var txtSenha = TextEditingController();
+  var _formId = GlobalKey<FormState>();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(40),
+          child: Form(
+            key: _formId,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('lib/imagens/Hora_do_Remedio.png'),
+                //
+                SizedBox(height: 30),
+                TextField(
+                  controller: txtLogin,
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.yellow)),
+                    icon: Icon(Icons.person_outline, color: Colors.yellow),
+                    labelText: 'Insira o Usuário',
+                    labelStyle: TextStyle(color: Colors.yellow),
+                  ),
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 30),
+                TextField(
+                  controller: txtSenha,
+                  decoration: InputDecoration(
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.yellow)),
+                    icon: Icon(Icons.lock_outline, color: Colors.yellow),
+                    labelText: 'Senha',
+                    labelStyle: TextStyle(color: Colors.yellow),
+                  ),
+                  style: TextStyle(color: Colors.white),
+                  obscureText: true,
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.only(top: 20),
+                  width: double.infinity,
+                  height: 70,
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(backgroundColor:
+                        MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.pressed))
+                          return Colors.yellow.shade700;
+                        return Colors.yellow.shade600;
+                      },
+                    )),
+                    label: Text(
+                      'Entrar',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    icon: Icon(Icons.login),
+                    onPressed: () {
+                      setState(() {
+                        //
+                        Navigator.pushReplacementNamed(context, '/menu');
+                      });
+                    },
+                  ),
+                )
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
       ),
     );
   }
