@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_desafio_elio_lucas/view/calendario.dart';
 import 'package:projeto_desafio_elio_lucas/view/menu.dart';
@@ -11,8 +12,8 @@ void main() async {
     initialRoute: '/primeira',
     routes: {
       '/primeira': (context) => PrimeiraTela(),
-      '/menu':(context) => HomeState(),
-      '/calendario':(context) => Calendario()
+      '/menu': (context) => HomeState(),
+      '/calendario': (context) => Calendario()
     },
     //Tema
     theme: ThemeData(
@@ -92,7 +93,7 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
                     )),
                     label: Text(
                       'Entrar',
-                      style: TextStyle(fontSize: 24), 
+                      style: TextStyle(fontSize: 24),
                     ),
                     icon: Icon(Icons.login),
                     onPressed: () {
@@ -100,7 +101,6 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
                         //
                         Navigator.pushReplacementNamed(context, '/menu');
                       });
-
                     },
                   ),
                 )
