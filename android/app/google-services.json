@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1031458638899",
+    "project_id": "desafio-projetoidosos",
+    "storage_bucket": "desafio-projetoidosos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031458638899:android:fb779ec8536a895f452746",
+        "android_client_info": {
+          "package_name": "com.example.projeto_desafio_elio_lucas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031458638899-4asibt87nd56k78gfqnj484vn5sfb2kk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAJzJrmoezAR5Uml4rP5V7maX_2WMQeGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1031458638899-4asibt87nd56k78gfqnj484vn5sfb2kk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

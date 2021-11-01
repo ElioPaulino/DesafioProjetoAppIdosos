@@ -40,17 +40,17 @@ class _HomeState extends State<HomeState> {
         },
         children: <Widget>[
           Container(
-            color: Colors.black,
-          ),
+              //color: Colors.black,
+              ),
           Container(
-            color: Colors.blue,
-          ),
+              //color: Colors.blue,
+              ),
           Container(
-            color: Colors.red,
-          ),
+              //color: Colors.red,
+              ),
           Container(
-            color: Colors.pink,
-          ),
+              //color: Colors.pink,
+              ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation

@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_desafio_elio_lucas/view/calendario.dart';
 import 'package:projeto_desafio_elio_lucas/view/menu.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Hora do Remédio',
@@ -25,6 +29,10 @@ void main() async {
       ),
     ),
   ));
+
+  //Teste do firebase
+  /*var db = FirebaseFirestore.instance;
+  db.collection('teste').add({"nome": "Teste nome", "numero": "Teste Numero"});*/
 }
 
 class PrimeiraTela extends StatefulWidget {
