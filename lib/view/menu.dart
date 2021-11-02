@@ -74,29 +74,6 @@ class _HomeState extends State<HomeState> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      
-                      /*Container(
-                        padding: EdgeInsets.symmetric(horizontal: 0.0),
-                        
-                        child: Card(
-                          semanticContainer: true,
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          child: BoxDecoration(
-                            title: Text(
-                              "Segunda",
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          
-                          elevation: 5,
-                          margin: EdgeInsets.all(10),
-                          color: Colors.purple[800],
-                        ),
-                      ),*/
                       Container(child: Center(child: Text("Terça"))),
                       Container(child: Center(child: Text("Quarta"))),
                       Container(child: Center(child: Text("Quinta")))
@@ -105,7 +82,6 @@ class _HomeState extends State<HomeState> {
                 )
               ],
             ),
-           // color: Colors.blue,
           ),
           Container(
             color: Colors.red,
