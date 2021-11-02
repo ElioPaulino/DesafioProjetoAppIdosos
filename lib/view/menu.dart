@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class HomeState extends StatefulWidget {
@@ -53,9 +55,13 @@ class _HomeState extends State<HomeState> {
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     children: <Widget>[
+                      Container(
+                          child: Center(
+                              child: Text("Segunda feira",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 23)))),
                       Card(
-                        semanticContainer: true,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               vertical: 5.0, horizontal: 5.0),
@@ -63,12 +69,48 @@ class _HomeState extends State<HomeState> {
                             children: <Widget>[
                               Text("Cloroquina",
                                   textAlign: TextAlign.center,
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              SizedBox(
-                                height: 5.0,
-                              ),
-                              Text("Dias da semana: \nHorário: \n"),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.yellow)),
+                              Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(children: <Widget>[
+                                      Text(
+                                        "Dias da semana: ",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.grey),
+                                      )
+                                    ]),
+                                    Row(children: <Widget>[
+                                      Text(
+                                        "Horário: ",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 14, color: Colors.grey),
+                                      )
+                                    ]),
+                                    Row(children: <Widget>[
+                                      Column(children: <Widget>[
+                                        Text(
+                                          "Já tomou o remédio hoje? ",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              fontSize: 14, color: Colors.grey),
+                                        ),
+                                      ]),
+                                      Column(
+                                        children: <Widget>[
+                                          Icon(Icons.check_box,
+                                              color: Colors.green, size: 17,)
+                                        ],
+                                      )
+                                    ]),
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -79,18 +121,69 @@ class _HomeState extends State<HomeState> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      Container(child: Center(child: Text("Terça"))),
-                      Container(child: Center(child: Text("Quarta"))),
-                      Container(child: Center(child: Text("Quinta")))
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
           Container(
-              //color: Colors.red,
+              child: ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              Card(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text("Cloroquina",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white)),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(children: <Widget>[
+                              Text(
+                                "Médico que prescritor: ",
+                                textAlign: TextAlign.left,
+                                style:
+                                    TextStyle(fontSize: 14, color: Colors.grey),
+                              )
+                            ]),
+                            Row(children: <Widget>[
+                              Text(
+                                "Função: ",
+                                textAlign: TextAlign.left,
+                                style:
+                                    TextStyle(fontSize: 14, color: Colors.grey),
+                              )
+                            ]),
+                            Row(children: <Widget>[
+                              Text(
+                                "Validade: ",
+                                textAlign: TextAlign.left,
+                                style:
+                                    TextStyle(fontSize: 14, color: Colors.grey),
+                              )
+                            ]),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                color: Colors.purple[800],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
+            ],
+          )),
           Container(
               //color: Colors.pink,
               ),
