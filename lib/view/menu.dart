@@ -43,8 +43,45 @@ class _HomeState extends State<HomeState> {
               //color: Colors.black,
               ),
           Container(
-              //color: Colors.blue,
-              ),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              physics: PageScrollPhysics(),
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      Card(
+                        semanticContainer: true,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text("Cloroquina", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+                              SizedBox(height: 5.0,),
+                              Text("Ola2"),
+                            ],
+                          ),
+                        ),
+                        elevation: 5,
+                        margin: EdgeInsets.all(10),
+                        color: Colors.purple[800],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      Container(child: Center(child: Text("Terça"))),
+                      Container(child: Center(child: Text("Quarta"))),
+                      Container(child: Center(child: Text("Quinta")))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
           Container(
               //color: Colors.red,
               ),
