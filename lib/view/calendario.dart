@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
 class Calendario extends StatefulWidget {
   @override
@@ -16,9 +15,6 @@ class _Calendario extends State<Calendario> {
       sabado = false,
       domingo = false;
   var nomeRemedio = TextEditingController();
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
   TimeOfDay horas = TimeOfDay.now();
 
   var txtLogin = TextEditingController();
