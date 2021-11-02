@@ -57,12 +57,18 @@ class _HomeState extends State<HomeState> {
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 5.0),
                           child: Column(
                             children: <Widget>[
-                              Text("Cloroquina", textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-                              SizedBox(height: 5.0,),
-                              Text("Ola2"),
+                              Text("Cloroquina",
+                                  textAlign: TextAlign.center,
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 5.0,
+                              ),
+                              Text("Dias da semana: \nHorário: \n"),
                             ],
                           ),
                         ),
