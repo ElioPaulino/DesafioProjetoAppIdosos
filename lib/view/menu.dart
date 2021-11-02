@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeState extends StatefulWidget {
   @override
@@ -41,8 +40,8 @@ class _HomeState extends State<HomeState> {
         },
         children: <Widget>[
           Container(
-            color: Colors.black,
-          ),
+              //color: Colors.black,
+              ),
           Container(
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -84,11 +83,11 @@ class _HomeState extends State<HomeState> {
             ),
           ),
           Container(
-            color: Colors.red,
-          ),
+              //color: Colors.red,
+              ),
           Container(
-            color: Colors.pink,
-          ),
+              //color: Colors.pink,
+              ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation
