@@ -15,6 +15,11 @@ class _Calendario extends State<Calendario> {
       sabado = false,
       domingo = false;
   var nomeRemedio = TextEditingController();
+  var nomeMedico = TextEditingController();
+  
+  var horastxt = TextEditingController();
+  var minutostxt = TextEditingController();
+
   TimeOfDay horas = TimeOfDay.now();
 
   var txtLogin = TextEditingController();
@@ -51,6 +56,19 @@ class _Calendario extends State<Calendario> {
                         borderSide: BorderSide(color: Colors.black),
                       ),
                       labelText: 'Informe o nome do remédio',
+                      labelStyle: TextStyle(color: Colors.black)),
+                  style: TextStyle(color: Colors.black),
+                ),
+                SizedBox(height: 30),
+                TextField(
+                  controller: nomeMedico,
+                  decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      labelText: 'Informe o nome do Médico prescritor',
                       labelStyle: TextStyle(color: Colors.black)),
                   style: TextStyle(color: Colors.black),
                 ),
@@ -195,6 +213,38 @@ class _Calendario extends State<Calendario> {
                     color: sabado ? Colors.green : Colors.red,
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0))),
+                SizedBox(height: 30),
+                
+                    TextField(
+                      controller: horastxt,
+                      decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          labelText: 'Horas',
+                          labelStyle: TextStyle(color: Colors.black)),
+                      style: TextStyle(color: Colors.black),
+                      keyboardType: TextInputType.number,
+                      
+                    ),
+                    SizedBox(height: 30),
+                    TextField(
+                      controller: minutostxt,
+                      decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          labelText: 'Minutos',
+                          labelStyle: TextStyle(color: Colors.black)),
+                      style: TextStyle(color: Colors.black),
+                      keyboardType: TextInputType.number,
+                    ),
+                
+
                 SizedBox(height: 30),
                 Container(
                   padding: EdgeInsets.only(top: 20),
