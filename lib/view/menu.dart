@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 class HomeState extends StatefulWidget {
@@ -15,13 +13,11 @@ class _HomeState extends State<HomeState> {
     _pageController = PageController();
   }
 
-  bool clickedCentreFAB =
-      false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex =
-      0; //to handle which item is currently selected in the bottom app bar
+  bool clickedCentreFAB = false; 
+  int selectedIndex = 0; 
   String text = "Home";
 
-  //call this method on click of each bottom app bar item to update the screen
+
   void updateTabSelection(int index) {
     setState(() {
       selectedIndex = index;
@@ -34,6 +30,14 @@ class _HomeState extends State<HomeState> {
       appBar: AppBar(
         title: Text('Hora do Remédio'),
         backgroundColor: Colors.purple[800],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              Navigator.pushNamed(context, '/primeira');
+            },
+          ),
+        ],
       ),
       body: PageView(
         controller: _pageController,
@@ -42,8 +46,36 @@ class _HomeState extends State<HomeState> {
         },
         children: <Widget>[
           Container(
-              //color: Colors.black,
+              child: ListView(
+            children: <Widget>[
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Row(children: <Widget>[
+                      Text(
+                        "Nome: ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 23,
+                            color: Colors.black),
+                      )
+                    ]),
+                    Row(children: <Widget>[
+                      Text(
+                        " Joao da Silva ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 23,
+                            color: Colors.black),
+                      )
+                    ]),
+                  ],
+                ),
               ),
+            ],
+          )),
           Container(
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -103,8 +135,11 @@ class _HomeState extends State<HomeState> {
                                       ]),
                                       Column(
                                         children: <Widget>[
-                                          Icon(Icons.check_box,
-                                              color: Colors.green, size: 17,)
+                                          Icon(
+                                            Icons.check_box,
+                                            color: Colors.green,
+                                            size: 17,
+                                          )
                                         ],
                                       )
                                     ]),
@@ -190,7 +225,7 @@ class _HomeState extends State<HomeState> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation
-          .centerDocked, //specify the location of the FAB
+          .centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
@@ -238,7 +273,6 @@ class _HomeState extends State<HomeState> {
                   color: selectedIndex == 1 ? Colors.yellow[600] : Colors.white,
                 ),
               ),
-              //to leave space in between the bottom app bar items and below the FAB
               SizedBox(
                 width: 50.0,
               ),
@@ -271,9 +305,7 @@ class _HomeState extends State<HomeState> {
             ],
           ),
         ),
-        //to add a space between the FAB and BottomAppBar
         shape: CircularNotchedRectangle(),
-        //color of the BottomAppBar
         color: Colors.purple[800],
       ),
     );

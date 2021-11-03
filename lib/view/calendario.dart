@@ -26,6 +26,14 @@ class _Calendario extends State<Calendario> {
       appBar: AppBar(
         title: Text('Agendamento'),
         backgroundColor: Colors.purple[800],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              Navigator.pushNamed(context, '/primeira');
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -52,7 +60,7 @@ class _Calendario extends State<Calendario> {
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 20),
-                /*TextField(
+                /*  TextField(
                   controller: txtLogin,
                   readOnly: true,
                   decoration: InputDecoration(
@@ -69,9 +77,9 @@ class _Calendario extends State<Calendario> {
                                   }));
                         },
                         icon: Icon(Icons.calendar_today, color: Colors.yellow)),
-                    labelText: 'Ecolha a data',
+                    labelText: 'Informe a validade',
                     // hintText: _selectedDay.toString(),
-                    labelStyle: TextStyle(color: Colors.yellow),
+                    labelStyle: TextStyle(color: Colors.black),
                   ),
                   style: TextStyle(color: Colors.black),
                 ),

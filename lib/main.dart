@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:projeto_desafio_elio_lucas/view/CadastroUsuario.dart';
 import 'package:projeto_desafio_elio_lucas/view/calendario.dart';
 import 'package:projeto_desafio_elio_lucas/view/menu.dart';
 
@@ -17,7 +19,8 @@ void main() async {
     routes: {
       '/primeira': (context) => PrimeiraTela(),
       '/menu': (context) => HomeState(),
-      '/calendario': (context) => Calendario()
+      '/calendario': (context) => Calendario(),
+      '/cadastro': (context) => CadastroUsuario()
     },
     //Tema
     theme: ThemeData(
@@ -29,10 +32,6 @@ void main() async {
       ),
     ),
   ));
-
-  //Teste do firebase
-  /*var db = FirebaseFirestore.instance;
-  db.collection('teste').add({"nome": "Teste nome", "numero": "Teste Numero"});*/
 }
 
 class PrimeiraTela extends StatefulWidget {
@@ -44,7 +43,6 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
   var txtLogin = TextEditingController();
   var txtSenha = TextEditingController();
   var _formId = GlobalKey<FormState>();
-  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,10 +103,7 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
                     ),
                     icon: Icon(Icons.login),
                     onPressed: () {
-                      setState(() {
-                        //
-                        Navigator.pushReplacementNamed(context, '/menu');
-                      });
+                      login(txtLogin.text, txtSenha.text);
                     },
                   ),
                 )
@@ -117,6 +112,47 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pushNamed(context, '/cadastro');
+        },
+        icon: Icon(Icons.add),
+        label: Text('Cadastrar'),
+        backgroundColor: Colors.yellow.shade600,
+      ),
     );
+  }
+
+  void login(email, senha) {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: senha)
+        .then((resultado) {
+      FirebaseFirestore.instance
+          .collection('Usuarios')
+          .doc(resultado.user!.uid)
+          .get()
+          .then((value) {
+        if (value.data()!['nome'].toString().isNotEmpty) {
+          Navigator.pushReplacementNamed(context, '/menu',
+              arguments: resultado.user!.uid);
+        }
+      });
+    }).catchError((erro) {
+      var errorCode = erro.code;
+      var mensagem = '';
+      if (errorCode == 'user-not-found') {
+        mensagem = 'Usuário não encontrado';
+      } else if (errorCode == 'wrong-password') {
+        mensagem = 'Senha inválida';
+      } else if (errorCode == 'invalid-email') {
+        mensagem = 'Email inválido';
+      } else {
+        mensagem = erro.message;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('ERRO: $mensagem'),
+        duration: Duration(seconds: 2),
+      ));
+    });
   }
 }
