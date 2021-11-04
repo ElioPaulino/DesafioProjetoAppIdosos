@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class HomeState extends StatefulWidget {
   @override
@@ -7,6 +10,22 @@ class HomeState extends StatefulWidget {
 
 class _HomeState extends State<HomeState> {
   late PageController _pageController;
+  late String nome = "";
+  late String idade = "";
+  late String sexo = "";
+
+  getDocumentById(String id) async {
+    await FirebaseFirestore.instance
+        .collection('Usuarios')
+        .doc(id)
+        .get()
+        .then((value) {
+      nome = value.data()!['nome'].toString();
+      idade = value.data()!['idade'].toString();
+      sexo = value.data()!['sexo'].toString();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -25,6 +44,16 @@ class _HomeState extends State<HomeState> {
 
   @override
   Widget build(BuildContext context) {
+    var id = ModalRoute.of(context)?.settings.arguments;
+    FirebaseFirestore.instance
+        .collection('Usuarios')
+        .doc(id.toString())
+        .get()
+        .then((value) {
+      nome = value.data()!['nome'].toString();
+      idade = value.data()!['idade'].toString();
+      sexo = value.data()!['sexo'].toString();
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text('Hora do Remédio'),
@@ -45,80 +74,80 @@ class _HomeState extends State<HomeState> {
         },
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(14),
+              padding: EdgeInsets.all(14),
               child: ListView(
-            children: <Widget>[
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    Row(children: <Widget>[
-                      Text(
-                        "Nome: ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Colors.black),
-                      )
-                    ]),
-                    Row(children: <Widget>[
-                      Text(
-                        "                "  + "Joao da Silva ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Colors.black),
-                      )
-                    ]),
-                    SizedBox(height: 20),
-                    Row(children: <Widget>[
-                      Text(
-                        "Sexo: ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Colors.black),
-                      )
-                    ]),
-                    Row(children: <Widget>[
-                      Text(
-                        "                "  + "Masculino",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Colors.black),
-                      )
-                    ]),
-                    SizedBox(height: 20),
-                    Row(children: <Widget>[
-                      Text(
-                        "Idade: ",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Colors.black),
-                      )
-                    ]),
-                    Row(children: <Widget>[
-                      Text(
-                        "                "  + "25",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 23,
-                            color: Colors.black),
-                      )
-                    ]),
-                    SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            ],
-          )),
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Row(children: <Widget>[
+                          Text(
+                            "Nome: ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                color: Colors.black),
+                          )
+                        ]),
+                        Row(children: <Widget>[
+                          Text(
+                            "                " + nome,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                color: Colors.black),
+                          )
+                        ]),
+                        SizedBox(height: 20),
+                        Row(children: <Widget>[
+                          Text(
+                            "Sexo: ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                color: Colors.black),
+                          )
+                        ]),
+                        Row(children: <Widget>[
+                          Text(
+                            "                " + sexo,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                color: Colors.black),
+                          )
+                        ]),
+                        SizedBox(height: 20),
+                        Row(children: <Widget>[
+                          Text(
+                            "Idade: ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                color: Colors.black),
+                          )
+                        ]),
+                        Row(children: <Widget>[
+                          Text(
+                            "                " + idade,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 23,
+                                color: Colors.black),
+                          )
+                        ]),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                ],
+              )),
           Container(
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -132,7 +161,7 @@ class _HomeState extends State<HomeState> {
                     children: <Widget>[
                       Container(
                           child: Center(
-                              child: Text("Segunda feira",
+                              child: Text("Segunda-Feira",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 23)))),
@@ -210,7 +239,7 @@ class _HomeState extends State<HomeState> {
                     children: <Widget>[
                       Container(
                           child: Center(
-                              child: Text("Terça feira",
+                              child: Text("Terça-Feira",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 23)))),
@@ -288,7 +317,7 @@ class _HomeState extends State<HomeState> {
                     children: <Widget>[
                       Container(
                           child: Center(
-                              child: Text("Quarta feira",
+                              child: Text("Quarta-Feira",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 23)))),
@@ -366,7 +395,7 @@ class _HomeState extends State<HomeState> {
                     children: <Widget>[
                       Container(
                           child: Center(
-                              child: Text("Quinta feira",
+                              child: Text("Quinta-Feira",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 23)))),
@@ -444,7 +473,7 @@ class _HomeState extends State<HomeState> {
                     children: <Widget>[
                       Container(
                           child: Center(
-                              child: Text("Sexta feira",
+                              child: Text("Sexta-Feira",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 23)))),
