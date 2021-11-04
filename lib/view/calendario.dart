@@ -7,6 +7,8 @@ class Calendario extends StatefulWidget {
 }
 
 class _Calendario extends State<Calendario> {
+  String minuto = '00';
+  String hora = '00';
   late bool segunda = false,
       terca = false,
       quarta = false,
@@ -16,7 +18,7 @@ class _Calendario extends State<Calendario> {
       domingo = false;
   var nomeRemedio = TextEditingController();
   var nomeMedico = TextEditingController();
-  
+
   var horastxt = TextEditingController();
   var minutostxt = TextEditingController();
 
@@ -214,36 +216,149 @@ class _Calendario extends State<Calendario> {
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0))),
                 SizedBox(height: 30),
-                
-                    TextField(
-                      controller: horastxt,
-                      decoration: InputDecoration(
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          labelText: 'Horas',
-                          labelStyle: TextStyle(color: Colors.black)),
-                      style: TextStyle(color: Colors.black),
-                      keyboardType: TextInputType.number,
-                      
+                Text(
+                  "Informe o horário do remédio: ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButton<String>(
+                      value: hora,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          hora = newValue!;
+                        });
+                      },
+                      items: <String>[
+                        '00',
+                        '01',
+                        '02',
+                        '03',
+                        '04',
+                        '05',
+                        '06',
+                        '07',
+                        '08',
+                        '09',
+                        '10',
+                        '11',
+                        '12',
+                        '13',
+                        '14',
+                        '15',
+                        '16',
+                        '17',
+                        '18',
+                        '19',
+                        '20',
+                        '21',
+                        '22',
+                        '23',
+                        '24'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    SizedBox(height: 30),
-                    TextField(
-                      controller: minutostxt,
-                      decoration: InputDecoration(
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                          labelText: 'Minutos',
-                          labelStyle: TextStyle(color: Colors.black)),
-                      style: TextStyle(color: Colors.black),
-                      keyboardType: TextInputType.number,
+                    SizedBox(width: 15),
+                    Text(":"),
+                    SizedBox(width: 15),
+                    DropdownButton<String>(
+                      value: minuto,
+                      icon: const Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          minuto = newValue!;
+                        });
+                      },
+                      items: <String>['00',
+                        '1',
+                        '2',
+                        '3',
+                        '4',
+                        '5',
+                        '6',
+                        '7',
+                        '8',
+                        '9',
+                        '10',
+                        '11',
+                        '12',
+                        '13',
+                        '14',
+                        '15',
+                        '16',
+                        '17',
+                        '18',
+                        '19',
+                        '20',
+                        '21',
+                        '22',
+                        '23',
+                        '24',
+                        '25',
+                        '26',
+                        '27',
+                        '28',
+                        '29',
+                        '30',
+                        '31',
+                        '32',
+                        '33',
+                        '34',
+                        '35',
+                        '36',
+                        '37',
+                        '38',
+                        '39',
+                        '40',
+                        '41',
+                        '42',
+                        '43',
+                        '44',
+                        '45',
+                        '46',
+                        '47',
+                        '48',
+                        '49',
+                        '50',
+                        '51',
+                        '52',
+                        '53',
+                        '54',
+                        '55',
+                        '56',
+                        '57',
+                        '58',
+                        '59',
+                        '60',
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                
+                  ],
+                ),
 
                 SizedBox(height: 30),
                 Container(
