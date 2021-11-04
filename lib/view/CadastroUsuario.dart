@@ -16,6 +16,7 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
   var txtSenha = TextEditingController();
   var txtSenhaConf = TextEditingController();
   var _formId = GlobalKey<FormState>();
+  late String sexo = "";
 
   //Recuperar um documento a partir do ID
   getDocumentById(String id) async {
@@ -41,7 +42,7 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
       usuario = getDocumentById(id.toString());
       txtNome.text = usuario!.nome;
       txtIdade.text = usuario.idade;
-      txtSexo.text = usuario.sexo;
+      sexo = usuario.sexo;
       txtLogin.text = usuario.login;
       txtSenha.text = usuario.senha;
     }
@@ -84,17 +85,33 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
                     style: TextStyle(color: Colors.white),
                     keyboardType: TextInputType.number,
                   ),
-                  TextField(
-                    controller: txtSexo,
-                    decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.yellow)),
-                      labelText: "Informe o Sexo",
-                      labelStyle: TextStyle(color: Colors.yellow),
-                    ),
-                    style: TextStyle(color: Colors.white),
-                    keyboardType: TextInputType.number,
+                  SizedBox(height: 20),
+                  Text(
+                    "Sexo",
+                    style: TextStyle(fontSize: 23, color: Colors.yellow),
                   ),
+                  RadioListTile(
+                      title: Text("Masculino",
+                          style: TextStyle(color: Colors.yellow)),
+                      activeColor: Colors.yellow,
+                      value: "M",
+                      groupValue: sexo,
+                      onChanged: (String? valor) {
+                        setState(() {
+                          sexo = valor.toString();
+                        });
+                      }),
+                  RadioListTile(
+                      title: Text("Feminino",
+                          style: TextStyle(color: Colors.yellow)),
+                      activeColor: Colors.yellow,
+                      value: "F",
+                      groupValue: sexo,
+                      onChanged: (String? valor) {
+                        setState(() {
+                          sexo = valor.toString();
+                        });
+                      }),
                   SizedBox(height: 30),
                   TextField(
                     controller: txtLogin,
@@ -151,7 +168,7 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
                       icon: Icon(Icons.app_registration),
                       onPressed: () {
                         criarConta(txtNome.text, txtLogin.text, txtSenha.text,
-                            txtIdade.text, txtSexo.text);
+                            txtIdade.text, sexo);
                       },
                     ),
                   )
