@@ -9,6 +9,7 @@ class HomeState extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeState> {
+  late CollectionReference remedios;
   late PageController _pageController;
   late String nome = "";
   late String idade = "";
@@ -29,6 +30,7 @@ class _HomeState extends State<HomeState> {
   @override
   void initState() {
     super.initState();
+    List<Map<String, Object>> lista;
     _pageController = PageController();
   }
 
@@ -42,9 +44,19 @@ class _HomeState extends State<HomeState> {
     });
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
+    late int segundaCount = 1;
+    late int tercaCount = 1;
+    late int quartaCount = 1;
+    late int quintaCount = 1;
+    late int sextaCount = 1;
+    late int sabadoCount = 1;
+    late int domingoCount = 1;
     var id = ModalRoute.of(context)?.settings.arguments;
+    remedios = FirebaseFirestore.instance.collection('Remedios');
     FirebaseFirestore.instance
         .collection('Usuarios')
         .doc(id.toString())
@@ -54,6 +66,7 @@ class _HomeState extends State<HomeState> {
       idade = value.data()!['idade'].toString();
       sexo = value.data()!['sexo'].toString();
     });
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Hora do Remédio'),
@@ -156,548 +169,166 @@ class _HomeState extends State<HomeState> {
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      Container(
-                          child: Center(
-                              child: Text("Segunda-Feira",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Cloroquina",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.yellow)),
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Dias da semana: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Horário: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Column(children: <Widget>[
-                                        Text(
-                                          "Já tomou o remédio hoje? ",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.grey),
-                                        ),
-                                      ]),
-                                      Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Colors.green,
-                                            size: 17,
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.purple[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        if (segundaCount == 1) {
+                          segundaCount = 0;
+                          tercaCount = 1;
+                          quartaCount = 1;
+                          quintaCount = 1;
+                          sextaCount = 1;
+                          sabadoCount = 1;
+                          domingoCount = 1;
+                          return Center(
+                            child: Text("Segunda-Feira",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                          );
+                        }
+                        return listTile(index);
+                      }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      Container(
-                          child: Center(
-                              child: Text("Terça-Feira",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Cloroquina",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.yellow)),
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Dias da semana: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Horário: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Column(children: <Widget>[
-                                        Text(
-                                          "Já tomou o remédio hoje? ",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.grey),
-                                        ),
-                                      ]),
-                                      Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Colors.green,
-                                            size: 17,
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.purple[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        if (tercaCount == 1) {
+                          segundaCount = 1;
+                          tercaCount = 0;
+                          quartaCount = 1;
+                          quintaCount = 1;
+                          sextaCount = 1;
+                          sabadoCount = 1;
+                          domingoCount = 1;
+                          tercaCount = 0;
+                          return Center(
+                            child: Text("Terça-Feira",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                          );
+                        }
+                        return listTile(index);
+                      }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      Container(
-                          child: Center(
-                              child: Text("Quarta-Feira",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Cloroquina",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.yellow)),
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Dias da semana: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Horário: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Column(children: <Widget>[
-                                        Text(
-                                          "Já tomou o remédio hoje? ",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.grey),
-                                        ),
-                                      ]),
-                                      Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Colors.green,
-                                            size: 17,
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.purple[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        if (quartaCount == 1) {
+                          segundaCount = 1;
+                          tercaCount = 1;
+                          quartaCount = 0;
+                          quintaCount = 1;
+                          sextaCount = 1;
+                          sabadoCount = 1;
+                          domingoCount = 1;
+                          quartaCount = 0;
+                          return Center(
+                            child: Text("Quarta-Feira",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                          );
+                        }
+                        return listTile(index);
+                      }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      Container(
-                          child: Center(
-                              child: Text("Quinta-Feira",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Cloroquina",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.yellow)),
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Dias da semana: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Horário: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Column(children: <Widget>[
-                                        Text(
-                                          "Já tomou o remédio hoje? ",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.grey),
-                                        ),
-                                      ]),
-                                      Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Colors.green,
-                                            size: 17,
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.purple[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        if (quintaCount == 1) {
+                          segundaCount = 1;
+                          tercaCount = 1;
+                          quartaCount = 1;
+                          quintaCount = 0;
+                          sextaCount = 1;
+                          sabadoCount = 1;
+                          domingoCount = 1;
+                          return Center(
+                            child: Text("Quinta-Feira",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                          );
+                        }
+                        return listTile(index);
+                      }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      Container(
-                          child: Center(
-                              child: Text("Sexta-Feira",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Cloroquina",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.yellow)),
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Dias da semana: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Horário: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Column(children: <Widget>[
-                                        Text(
-                                          "Já tomou o remédio hoje? ",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.grey),
-                                        ),
-                                      ]),
-                                      Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Colors.green,
-                                            size: 17,
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.purple[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        if (sextaCount == 1) {
+                          segundaCount = 1;
+                          tercaCount = 1;
+                          quartaCount = 1;
+                          quintaCount = 1;
+                          sextaCount = 0;
+                          sabadoCount = 1;
+                          domingoCount = 1;
+                          return Center(
+                            child: Text("Sexta-Feira",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                          );
+                        }
+                        return listTile(index);
+                      }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      Container(
-                          child: Center(
-                              child: Text("Sábado",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Cloroquina",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.yellow)),
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Dias da semana: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Horário: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Column(children: <Widget>[
-                                        Text(
-                                          "Já tomou o remédio hoje? ",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.grey),
-                                        ),
-                                      ]),
-                                      Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Colors.green,
-                                            size: 17,
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.purple[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        if (sabadoCount == 1) {
+                          segundaCount = 1;
+                          tercaCount = 1;
+                          quartaCount = 1;
+                          quintaCount = 1;
+                          sextaCount = 1;
+                          sabadoCount = 0;
+                          domingoCount = 1;
+                          sabadoCount = 0;
+                          return Center(
+                            child: Text("Sábado",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                          );
+                        }
+                        return listTile(index);
+                      }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      Container(
-                          child: Center(
-                              child: Text("Domingo",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-                      Card(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 5.0, horizontal: 5.0),
-                          child: Column(
-                            children: <Widget>[
-                              Text("Cloroquina",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.yellow)),
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Dias da semana: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Text(
-                                        "Horário: ",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 14, color: Colors.grey),
-                                      )
-                                    ]),
-                                    Row(children: <Widget>[
-                                      Column(children: <Widget>[
-                                        Text(
-                                          "Já tomou o remédio hoje? ",
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                              fontSize: 14, color: Colors.grey),
-                                        ),
-                                      ]),
-                                      Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.check_box,
-                                            color: Colors.green,
-                                            size: 17,
-                                          )
-                                        ],
-                                      )
-                                    ]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        elevation: 5,
-                        margin: EdgeInsets.all(10),
-                        color: Colors.purple[800],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        if (domingoCount == 1) {
+                          segundaCount = 1;
+                          tercaCount = 1;
+                          quartaCount = 1;
+                          quintaCount = 1;
+                          sextaCount = 1;
+                          sabadoCount = 1;
+                          domingoCount = 0;
+                          return Center(
+                            child: Text("Domingo",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                          );
+                        }
+                        return listTile(index);
+                      }),
                 ),
               ],
             ),
@@ -769,7 +400,7 @@ class _HomeState extends State<HomeState> {
         onPressed: () {
           setState(() {
             clickedCentreFAB = !clickedCentreFAB;
-            Navigator.pushNamed(context, '/calendario');
+            Navigator.pushNamed(context, '/calendario', arguments: id);
           });
         },
         child: Container(
@@ -847,6 +478,72 @@ class _HomeState extends State<HomeState> {
         shape: CircularNotchedRectangle(),
         color: Colors.purple[800],
       ),
+    );
+  }
+
+  Widget listTile(int index) {
+    return Column(
+      children: [
+        Card(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+            child: Column(
+              children: <Widget>[
+                Text("Cloroquina",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.yellow)),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(children: <Widget>[
+                        Text(
+                          "Dias da semana: ",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        )
+                      ]),
+                      Row(children: <Widget>[
+                        Text(
+                          "Horário: ",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        )
+                      ]),
+                      Row(children: <Widget>[
+                        Column(children: <Widget>[
+                          Text(
+                            "Já tomou o remédio hoje? ",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                        ]),
+                        Column(
+                          children: <Widget>[
+                            Icon(
+                              Icons.check_box,
+                              color: Colors.green,
+                              size: 17,
+                            )
+                          ],
+                        )
+                      ]),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          elevation: 5,
+          margin: EdgeInsets.all(10),
+          color: Colors.purple[800],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ],
     );
   }
 }
