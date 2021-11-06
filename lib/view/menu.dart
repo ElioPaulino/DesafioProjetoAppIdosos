@@ -73,7 +73,7 @@ class _HomeState extends State<HomeState> {
           setState(() {});
         },
         children: <Widget>[
-          Container(
+          /*Container(
               padding: EdgeInsets.all(14),
               child: ListView(
                 children: <Widget>[
@@ -147,7 +147,111 @@ class _HomeState extends State<HomeState> {
                     ),
                   ),
                 ],
-              )),
+              )),*/
+              
+              Container(
+                padding: EdgeInsets.all(14),
+              child: ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(10),
+                          child: Center(
+                              child: Text("Informações pessoais",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 23)))),
+              Card(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                  child: Column(
+                    children: <Widget>[
+                        
+                      Text("Seja bem-vindo\n " + nome,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.yellow)),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(children: <Widget>[
+                              Text(
+                                "Sexo: " + sexo,
+                                textAlign: TextAlign.left,
+                                style:
+                                    TextStyle(fontSize: 14, color: Colors.white),
+                              )
+                            ]),
+                            Row(children: <Widget>[
+                              Text(
+                                "Idade: " + idade,
+                                textAlign: TextAlign.left,
+                                style:
+                                    TextStyle(fontSize: 14, color: Colors.white),
+                              )
+                            ]),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                color: Colors.purple[800],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              /*Container(
+                padding: EdgeInsets.all(10),
+                          child: Center(
+                            
+                              child: Text("Informações de Login",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 23)))),
+               Card(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                  child: Column(
+                    children: <Widget>[
+
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(children: <Widget>[
+                              Text(
+                                "email: " + email,
+                                textAlign: TextAlign.left,
+                                style:
+                                    TextStyle(fontSize: 14, color: Colors.white),
+                              )
+                            ]),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                elevation: 5,
+                margin: EdgeInsets.all(10),
+                color: Colors.purple[800],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),     */              
+
+            ],
+          )
+          ),
+
+
+
+
+
           Container(
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -758,7 +862,8 @@ class _HomeState extends State<HomeState> {
                 ),
               ),
             ],
-          )),
+          )
+          ),
           Container(
               //color: Colors.pink,
               ),
