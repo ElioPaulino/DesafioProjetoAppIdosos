@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 class Calendario extends StatefulWidget {
   @override
   _Calendario createState() => _Calendario();
@@ -29,6 +31,8 @@ class _Calendario extends State<Calendario> {
   String texto = '';
   @override
   Widget build(BuildContext context) {
+    var id = ModalRoute.of(context)?.settings.arguments;
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Agendamento'),
@@ -290,15 +294,15 @@ class _Calendario extends State<Calendario> {
                         });
                       },
                       items: <String>['00',
-                        '1',
-                        '2',
-                        '3',
-                        '4',
-                        '5',
-                        '6',
-                        '7',
-                        '8',
-                        '9',
+                        '01',
+                        '02',
+                        '03',
+                        '04',
+                        '05',
+                        '06',
+                        '07',
+                        '08',
+                        '09',
                         '10',
                         '11',
                         '12',
@@ -381,8 +385,22 @@ class _Calendario extends State<Calendario> {
                     icon: Icon(Icons.login),
                     onPressed: () {
                       setState(() {
-                        //
-                        Navigator.pushReplacementNamed(context, '/menu');
+                        var db = FirebaseFirestore.instance;
+                        db.collection('Remedios').add({
+                          "nomeRemedio": nomeRemedio.text,
+                          "nomeMedico": nomeMedico.text,
+                          "segunda" : segunda,
+                          "terca": terca,
+                          "quarta":quarta,
+                          "quinta":quinta,
+                          "sexta":sexta,
+                          "sabado":sabado,
+                          "domingo":domingo,
+                          "hora":hora,
+                          "minuto":minuto,
+                          "usuario": id
+                        });
+                        Navigator.pushReplacementNamed(context, '/menu', arguments: id);
                       });
                     },
                   ),
