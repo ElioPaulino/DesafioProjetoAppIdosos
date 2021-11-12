@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:projeto_desafio_elio_lucas/model/Remedio.dart';
 
 class HomeState extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class _HomeState extends State<HomeState> {
   late String nome = "";
   late String idade = "";
   late String sexo = "";
+  late Remedio remedio;
+  List<Remedio> listaRemedio = [];
 
   getDocumentById(String id) async {
     await FirebaseFirestore.instance
@@ -30,7 +33,6 @@ class _HomeState extends State<HomeState> {
   @override
   void initState() {
     super.initState();
-    List<Map<String, Object>> lista;
     _pageController = PageController();
   }
 
@@ -38,13 +40,17 @@ class _HomeState extends State<HomeState> {
   int selectedIndex = 0;
   String text = "Home";
 
+  getDocuments(String id) async {
+    await FirebaseFirestore.instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString());
+  }
+
   void updateTabSelection(int index) {
     setState(() {
       selectedIndex = index;
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +62,25 @@ class _HomeState extends State<HomeState> {
     late int sabadoCount = 1;
     late int domingoCount = 1;
     var id = ModalRoute.of(context)?.settings.arguments;
-    remedios = FirebaseFirestore.instance.collection('Remedios');
-    FirebaseFirestore.instance
-        .collection('Usuarios')
-        .doc(id.toString())
-        .get()
-        .then((value) {
-      nome = value.data()!['nome'].toString();
-      idade = value.data()!['idade'].toString();
-      sexo = value.data()!['sexo'].toString();
-    });
+    
+    buscaDaListaTeste(id);
 
+    for (var item in listaRemedio) {
+      print("" + item.id);
+      print("" + item.hora);
+      print("" + item.minuto);
+      print("" + item.nomeMedico);
+      print("" + item.nomeRemedio);
+      print("" + item.segunda.toString());
+      print("" + item.terca.toString());
+      print("" + item.quarta.toString());
+      print("" + item.quinta.toString());
+      print("" + item.sexta.toString());
+      print("" + item.sabado.toString());
+      print("" + item.domingo.toString());
+      print("------------------------------------------------------");
+    }
+    print(id.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Hora do Remédio'),
@@ -161,64 +175,63 @@ class _HomeState extends State<HomeState> {
                   ),
                 ],
               )),*/
-              
-              Container(
-                padding: EdgeInsets.all(14),
+
+          Container(
+              padding: EdgeInsets.all(14),
               child: ListView(
-            scrollDirection: Axis.vertical,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                          child: Center(
-                              child: Text("Informações pessoais",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23)))),
-              Card(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-                  child: Column(
-                    children: <Widget>[
-                        
-                      Text("Seja bem-vindo\n " + nome,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.yellow)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Row(children: <Widget>[
-                              Text(
-                                "Sexo: " + sexo,
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.white),
-                              )
-                            ]),
-                            Row(children: <Widget>[
-                              Text(
-                                "Idade: " + idade,
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.white),
-                              )
-                            ]),
-                          ],
-                        ),
-                      )
-                    ],
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  Container(
+                      padding: EdgeInsets.all(10),
+                      child: Center(
+                          child: Text("Informações pessoais",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 23)))),
+                  Card(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+                      child: Column(
+                        children: <Widget>[
+                          Text("Seja bem-vindo\n " + nome,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.yellow)),
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  Text(
+                                    "Sexo: " + sexo,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.white),
+                                  )
+                                ]),
+                                Row(children: <Widget>[
+                                  Text(
+                                    "Idade: " + idade,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.white),
+                                  )
+                                ]),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    elevation: 5,
+                    margin: EdgeInsets.all(10),
+                    color: Colors.purple[800],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
-                ),
-                elevation: 5,
-                margin: EdgeInsets.all(10),
-                color: Colors.purple[800],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              /*Container(
+                  /*Container(
                 padding: EdgeInsets.all(10),
                           child: Center(
                             
@@ -255,16 +268,9 @@ class _HomeState extends State<HomeState> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-              ),     */              
-
-            ],
-          )
-          ),
-
-
-
-
-
+              ),     */
+                ],
+              )),
           Container(
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -274,7 +280,7 @@ class _HomeState extends State<HomeState> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: listaRemedio.length,
                       itemBuilder: (context, index) {
                         if (segundaCount == 1) {
                           segundaCount = 0;
@@ -290,14 +296,14 @@ class _HomeState extends State<HomeState> {
                                     fontWeight: FontWeight.bold, fontSize: 23)),
                           );
                         }
-                        return listTile(index);
+                        return listTile(listaRemedio.elementAt(index-1));
                       }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: listaRemedio.length,
                       itemBuilder: (context, index) {
                         if (tercaCount == 1) {
                           segundaCount = 1;
@@ -314,14 +320,14 @@ class _HomeState extends State<HomeState> {
                                     fontWeight: FontWeight.bold, fontSize: 23)),
                           );
                         }
-                        return listTile(index);
+                        return listTile(listaRemedio.elementAt(index-1));
                       }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: listaRemedio.length,
                       itemBuilder: (context, index) {
                         if (quartaCount == 1) {
                           segundaCount = 1;
@@ -338,14 +344,14 @@ class _HomeState extends State<HomeState> {
                                     fontWeight: FontWeight.bold, fontSize: 23)),
                           );
                         }
-                        return listTile(index);
+                        return listTile(listaRemedio.elementAt(index-1));
                       }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: listaRemedio.length,
                       itemBuilder: (context, index) {
                         if (quintaCount == 1) {
                           segundaCount = 1;
@@ -361,14 +367,14 @@ class _HomeState extends State<HomeState> {
                                     fontWeight: FontWeight.bold, fontSize: 23)),
                           );
                         }
-                        return listTile(index);
+                        return listTile(listaRemedio.elementAt(index-1));
                       }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: listaRemedio.length,
                       itemBuilder: (context, index) {
                         if (sextaCount == 1) {
                           segundaCount = 1;
@@ -384,14 +390,14 @@ class _HomeState extends State<HomeState> {
                                     fontWeight: FontWeight.bold, fontSize: 23)),
                           );
                         }
-                        return listTile(index);
+                        return listTile(listaRemedio.elementAt(index-1));
                       }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: listaRemedio.length,
                       itemBuilder: (context, index) {
                         if (sabadoCount == 1) {
                           segundaCount = 1;
@@ -408,14 +414,14 @@ class _HomeState extends State<HomeState> {
                                     fontWeight: FontWeight.bold, fontSize: 23)),
                           );
                         }
-                        return listTile(index);
+                        return listTile(listaRemedio.elementAt(index-1));
                       }),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: listaRemedio.length,
                       itemBuilder: (context, index) {
                         if (domingoCount == 1) {
                           segundaCount = 1;
@@ -431,7 +437,7 @@ class _HomeState extends State<HomeState> {
                                     fontWeight: FontWeight.bold, fontSize: 23)),
                           );
                         }
-                        return listTile(index);
+                        return listTile(listaRemedio.elementAt(index-1));
                       }),
                 ),
               ],
@@ -493,8 +499,7 @@ class _HomeState extends State<HomeState> {
                 ),
               ),
             ],
-          )
-          ),
+          )),
           Container(
               //color: Colors.pink,
               ),
@@ -586,7 +591,32 @@ class _HomeState extends State<HomeState> {
     );
   }
 
-  Widget listTile(int index) {
+  void buscaDaListaTeste(Object? id) async{
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .get();
+    
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+    
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedio.add(a);
+        print("aqui");
+      }
+    });
+  }
+
+  Widget listTile(Remedio remedio) {
     return Column(
       children: [
         Card(
@@ -594,7 +624,7 @@ class _HomeState extends State<HomeState> {
             padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
             child: Column(
               children: <Widget>[
-                Text("Cloroquina",
+                Text(remedio.nomeRemedio,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -612,7 +642,7 @@ class _HomeState extends State<HomeState> {
                       ]),
                       Row(children: <Widget>[
                         Text(
-                          "Horário: ",
+                          "Horário: " + remedio.hora +" : " +remedio.minuto,
                           textAlign: TextAlign.left,
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         )
