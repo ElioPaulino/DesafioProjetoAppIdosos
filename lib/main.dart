@@ -40,10 +40,9 @@ class PrimeiraTela extends StatefulWidget {
 }
 
 class _PrimeiraTelaState extends State<PrimeiraTela> {
-  
-
   var txtLogin = TextEditingController();
   var txtSenha = TextEditingController();
+
   var _formId = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -105,6 +104,8 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
                     ),
                     icon: Icon(Icons.login),
                     onPressed: () {
+                      txtLogin.text = "elio_paulino@hotmail.com";
+                      txtSenha.text = "eppp010899";
                       login(txtLogin.text, txtSenha.text);
                     },
                   ),
