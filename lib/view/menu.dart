@@ -24,6 +24,7 @@ class _HomeState extends State<HomeState> {
   List<Remedio> listaRemedioSexta = [];
   List<Remedio> listaRemedioSabado = [];
   List<Remedio> listaRemedioDomingo = [];
+  int count = 0;
 
   getDocumentById(String id) async {
     await FirebaseFirestore.instance
@@ -38,6 +39,11 @@ class _HomeState extends State<HomeState> {
       print(idade);
       print(sexo);
     });
+    if (count == 0) {
+      setState(() {
+        count= 1;
+      });
+    }
   }
 
   @override
@@ -50,8 +56,8 @@ class _HomeState extends State<HomeState> {
   int selectedIndex = 0;
   String text = "Home";
 
-  getDocuments(String id) async {
-    await FirebaseFirestore.instance
+  getDocuments(String id) {
+    FirebaseFirestore.instance
         .collection('Remedios')
         .where("usuario", isEqualTo: id.toString());
   }
@@ -741,34 +747,23 @@ class _HomeState extends State<HomeState> {
                     children: <Widget>[
                       Row(children: <Widget>[
                         Text(
-                          "Dias da semana: ",
+                          "Dias da semana: " +
+                              (remedio.segunda ? "Seg" : "") +
+                              (remedio.terca ? " Ter" : "") +
+                              (remedio.quarta ? " Quar" : "") +
+                              (remedio.quinta ? " Quin" : "") +
+                              (remedio.sexta ? " Sex" : "") +
+                              (remedio.sabado ? " Sab" : "") +
+                              (remedio.domingo ? " Dom" : ""),
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
                         )
                       ]),
                       Row(children: <Widget>[
                         Text(
                           "Horário: " + remedio.hora + " : " + remedio.minuto,
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 14, color: Colors.grey),
-                        )
-                      ]),
-                      Row(children: <Widget>[
-                        Column(children: <Widget>[
-                          Text(
-                            "Já tomou o remédio hoje? ",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
-                        ]),
-                        Column(
-                          children: <Widget>[
-                            Icon(
-                              Icons.check_box,
-                              color: Colors.green,
-                              size: 17,
-                            )
-                          ],
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
                         )
                       ]),
                     ],
