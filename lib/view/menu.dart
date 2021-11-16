@@ -24,6 +24,7 @@ class _HomeState extends State<HomeState> {
   List<Remedio> listaRemedioSexta = [];
   List<Remedio> listaRemedioSabado = [];
   List<Remedio> listaRemedioDomingo = [];
+  var id;
   int count = 0;
 
   getDocumentById(String id) async {
@@ -41,7 +42,7 @@ class _HomeState extends State<HomeState> {
     });
     if (count == 0) {
       setState(() {
-        count= 1;
+        count = 1;
       });
     }
   }
@@ -77,7 +78,7 @@ class _HomeState extends State<HomeState> {
     late int sextaCount = 1;
     late int sabadoCount = 1;
     late int domingoCount = 1;
-    var id = ModalRoute.of(context)?.settings.arguments;
+    id = ModalRoute.of(context)?.settings.arguments;
     getDocumentById(id.toString());
     buscaDaListaTeste(id);
     buscaDaListaSegunda(id);
@@ -599,7 +600,7 @@ class _HomeState extends State<HomeState> {
         .instance
         .collection('Remedios')
         .where("usuario", isEqualTo: id.toString())
-        .where("Quarta", isEqualTo: true)
+        .where("quarta", isEqualTo: true)
         .get();
 
     a.then((value) {
@@ -747,8 +748,14 @@ class _HomeState extends State<HomeState> {
                     children: <Widget>[
                       Row(children: <Widget>[
                         Text(
-                          "Dias da semana: " +
-                              (remedio.segunda ? "Seg" : "") +
+                          "Dias da semana: ",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 23, color: Colors.grey),
+                        )
+                      ]),
+                      Row(children: <Widget>[
+                        Text(
+                          (remedio.segunda ? "Seg" : "") +
                               (remedio.terca ? " Ter" : "") +
                               (remedio.quarta ? " Quar" : "") +
                               (remedio.quinta ? " Quin" : "") +
@@ -761,10 +768,77 @@ class _HomeState extends State<HomeState> {
                       ]),
                       Row(children: <Widget>[
                         Text(
-                          "Horário: " + remedio.hora + " : " + remedio.minuto,
+                          "Nome do médico: ",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 23, color: Colors.grey),
+                        )
+                      ]),
+                      Row(children: <Widget>[
+                        Text(
+                          " "+remedio.nomeMedico,
                           textAlign: TextAlign.left,
                           style: TextStyle(fontSize: 18, color: Colors.grey),
                         )
+                      ]),
+                      Row(children: <Widget>[
+                        Text(
+                          "Horário: " + remedio.hora + " : " + remedio.minuto,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 23, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 120,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Colors.red,
+                          onPressed: () {
+                            print("Excluir");
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                backgroundColor: Colors.purple,
+                                title: const Text(
+                                    'Tem certeza que deseja excluir?'),
+                                content: const Text(''),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'Cancelar');
+                                    },
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      count = 0;
+                                      FirebaseFirestore.instance
+                                          .collection("Remedios")
+                                          .doc(remedio.id)
+                                          .delete();
+                                      setState(() {});
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text('Sim'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            setState(() {});
+                          },
+                        ),
+                        /*SizedBox(
+                          width: 10,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          color: Colors.black,
+                          onPressed: () {
+                            print("Editar");
+                            Navigator.pushNamed(
+                                          context, '/calendario',
+                                          arguments: id);
+                          },
+                        ),*/
                       ]),
                     ],
                   ),
