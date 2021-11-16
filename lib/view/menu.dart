@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:projeto_desafio_elio_lucas/model/Consulta.dart';
 import 'package:projeto_desafio_elio_lucas/model/Remedio.dart';
 
 class HomeState extends StatefulWidget {
@@ -24,6 +23,8 @@ class _HomeState extends State<HomeState> {
   List<Remedio> listaRemedioSexta = [];
   List<Remedio> listaRemedioSabado = [];
   List<Remedio> listaRemedioDomingo = [];
+
+  List<Consulta> listaConsulta = [];
   int count = 0;
 
   getDocumentById(String id) async {
@@ -41,7 +42,7 @@ class _HomeState extends State<HomeState> {
     });
     if (count == 0) {
       setState(() {
-        count= 1;
+        count = 1;
       });
     }
   }
@@ -87,6 +88,7 @@ class _HomeState extends State<HomeState> {
     buscaDaListaSexta(id);
     buscaDaListaSabado(id);
     buscaDaListaDomingo(id);
+    buscarConsultas(id);
 
     return Scaffold(
       appBar: AppBar(
@@ -271,7 +273,7 @@ class _HomeState extends State<HomeState> {
                           return Center(
                             child: Text("Quinta-Feira",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                                    fontWeight: FontWeight.bold, fontSize: 22)),
                           );
                         }
                         return listaRemedioQuinta.length != 0
@@ -370,57 +372,63 @@ class _HomeState extends State<HomeState> {
               child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              Card(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text("Cloroquina",
+              Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(children: <Widget>[
+                      Spacer(),
+                      Text("Marcar a consulta ",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.white)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Row(children: <Widget>[
-                              Text(
-                                "Médico que prescritor: ",
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
-                              )
-                            ]),
-                            Row(children: <Widget>[
-                              Text(
-                                "Função: ",
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
-                              )
-                            ]),
-                            Row(children: <Widget>[
-                              Text(
-                                "Validade: ",
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
-                              )
-                            ]),
-                          ],
+                              fontSize: 22, fontWeight: FontWeight.bold)),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/consulta',
+                                arguments: id);
+                          },
+                          icon: Icon(Icons.add)),
+                      Spacer(),
+                    ]),
+                    Column(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: ListView.builder(
+                              itemCount: listaConsulta.length,
+                              itemBuilder: (context, index) {
+                                return listaConsulta.length != 0
+                                    ? listTileConsulta(
+                                        listaConsulta.elementAt(index))
+                                    : Container(
+                                        padding: EdgeInsets.only(top: 250),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Spacer(),
+                                              Icon(
+                                                Icons.not_interested_rounded,
+                                                color: Colors.grey,
+                                                size: 35,
+                                              ),
+                                              Text("Sem nenhuma Consulta",
+                                                  style: TextStyle(
+                                                      fontSize: 30,
+                                                      color: Colors.grey)),
+                                              Spacer(),
+                                            ]),
+                                      );
+                              }),
                         ),
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
-                elevation: 5,
-                margin: EdgeInsets.all(10),
-                color: Colors.purple[800],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
+              )
             ],
           )),
           Container(
@@ -534,9 +542,9 @@ class _HomeState extends State<HomeState> {
       for (var item in value.docs) {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedio.add(a);
-        print("aqui");
+        //  print("aqui");
       }
-      print("ALOU BB" + listaRemedio.length.toString());
+      // print("ALOU BB" + listaRemedio.length.toString());
     });
   }
 
@@ -561,9 +569,9 @@ class _HomeState extends State<HomeState> {
       for (var item in value.docs) {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedioSegunda.add(a);
-        print("aqui");
+        // print("aqui");
       }
-      print("Segunda Size: " + listaRemedioSegunda.length.toString());
+      // print("Segunda Size: " + listaRemedioSegunda.length.toString());
     });
   }
 
@@ -588,9 +596,9 @@ class _HomeState extends State<HomeState> {
       for (var item in value.docs) {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedioTerca.add(a);
-        print("aqui");
+        // print("aqui");
       }
-      print("Terca Size: " + listaRemedioTerca.length.toString());
+      // print("Terca Size: " + listaRemedioTerca.length.toString());
     });
   }
 
@@ -615,9 +623,9 @@ class _HomeState extends State<HomeState> {
       for (var item in value.docs) {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedioQuarta.add(a);
-        print("aqui");
+        // print("aqui");
       }
-      print("Quarta Size: " + listaRemedioQuarta.length.toString());
+      // print("Quarta Size: " + listaRemedioQuarta.length.toString());
     });
   }
 
@@ -642,9 +650,9 @@ class _HomeState extends State<HomeState> {
       for (var item in value.docs) {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedioQuinta.add(a);
-        print("aqui");
+        // print("aqui");
       }
-      print("Quinta Size: " + listaRemedioQuinta.length.toString());
+      // print("Quinta Size: " + listaRemedioQuinta.length.toString());
     });
   }
 
@@ -669,9 +677,9 @@ class _HomeState extends State<HomeState> {
       for (var item in value.docs) {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedioSexta.add(a);
-        print("aqui");
+        // print("aqui");
       }
-      print("Sexta Size: " + listaRemedioSexta.length.toString());
+      // print("Sexta Size: " + listaRemedioSexta.length.toString());
     });
   }
 
@@ -696,9 +704,9 @@ class _HomeState extends State<HomeState> {
       for (var item in value.docs) {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedioSabado.add(a);
-        print("aqui");
+        // print("aqui");
       }
-      print("Sabado size: " + listaRemedioSabado.length.toString());
+      //print("Sabado size: " + listaRemedioSabado.length.toString());
     });
   }
 
@@ -724,8 +732,89 @@ class _HomeState extends State<HomeState> {
         Remedio a = Remedio.fromJson(item.data(), item.id);
         listaRemedioDomingo.add(a);
       }
-      print("Domingo size: " + listaRemedioDomingo.length.toString());
+      //print("Domingo size: " + listaRemedioDomingo.length.toString());
     });
+  }
+
+  void buscarConsultas(Object? id) async {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Consulta')
+        .where("usuario", isEqualTo: id.toString())
+        .get();
+
+    a.then((value) {
+      listaConsulta.clear();
+      for (var item in value.docs) {
+        Consulta consulta = Consulta.fromJson(item.data(), item.id);
+        listaConsulta.add(consulta);
+      }
+    });
+  }
+
+  Widget listTileConsulta(Consulta consulta) {
+    return Column(
+      children: [
+        Card(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+            child: Column(
+              children: <Widget>[
+                Text(consulta.dia + " / " + consulta.mes + " / " + consulta.ano,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black)),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(children: <Widget>[
+                        Text(
+                          "Horário: " + consulta.hora + " : " + consulta.minuto,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        )
+                      ]),
+                      Row(children: <Widget>[
+                        Text("Médico: " + consulta.nomeMedico,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                      Row(children: <Widget>[
+                        Text("Endereco: " + consulta.endereco,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                      Row(children: <Widget>[
+                        Text("Celular: " + consulta.celular,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          elevation: 5,
+          margin: EdgeInsets.all(10),
+          //color: Colors.purple[800],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget listTile(Remedio remedio) {
@@ -756,14 +845,14 @@ class _HomeState extends State<HomeState> {
                               (remedio.sabado ? " Sab" : "") +
                               (remedio.domingo ? " Dom" : ""),
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         )
                       ]),
                       Row(children: <Widget>[
                         Text(
                           "Horário: " + remedio.hora + " : " + remedio.minuto,
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         )
                       ]),
                     ],
