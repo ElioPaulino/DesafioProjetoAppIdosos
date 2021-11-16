@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-class Calendario extends StatefulWidget {
+class Consulta extends StatefulWidget {
   @override
   _Calendario createState() => _Calendario();
 }
 
-class _Calendario extends State<Calendario> {
+class _Calendario extends State<Consulta> {
   String minuto = '00';
   String hora = '00';
   late bool segunda = false,
@@ -19,24 +16,26 @@ class _Calendario extends State<Calendario> {
       sexta = false,
       sabado = false,
       domingo = false;
-  var nomeRemedio = TextEditingController();
+
   var nomeMedico = TextEditingController();
+  var endereco = TextEditingController();
+  var numero = TextEditingController();
+  var celular = TextEditingController();
 
   var horastxt = TextEditingController();
   var minutostxt = TextEditingController();
 
-  TimeOfDay horas = TimeOfDay.now();
+  var dia = TextEditingController();
+  var mes = TextEditingController();
+  var ano = TextEditingController();
 
-  var txtLogin = TextEditingController();
-  var txtHoras = TextEditingController();
-  String texto = '';
   @override
   Widget build(BuildContext context) {
     var id = ModalRoute.of(context)?.settings.arguments;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agendamento'),
+        title: Text('Registrar Consulta'),
         backgroundColor: Colors.purple[800],
         actions: [
           IconButton(
@@ -53,20 +52,11 @@ class _Calendario extends State<Calendario> {
             padding: EdgeInsets.all(40),
             child: Column(
               children: [
-                SizedBox(height: 30),
-                TextField(
-                  controller: nomeRemedio,
-                  decoration: InputDecoration(
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      labelText: 'Informe o nome do remédio',
-                      labelStyle: TextStyle(color: Colors.black)),
-                  style: TextStyle(color: Colors.black),
+                Text(
+                  "Informação médico",
+                  style: TextStyle(fontSize: 20),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 15),
                 TextField(
                   controller: nomeMedico,
                   decoration: InputDecoration(
@@ -75,156 +65,114 @@ class _Calendario extends State<Calendario> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                       ),
-                      labelText: 'Informe o nome do Médico prescritor',
+                      labelText: 'Informe o nome do Médico',
                       labelStyle: TextStyle(color: Colors.black)),
                   style: TextStyle(color: Colors.black),
                 ),
                 SizedBox(height: 30),
-                Text(
-                  "Informe os dias: ",
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(height: 20),
-                /*  TextField(
-                  controller: txtLogin,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.utc(2010, 10, 16),
-                                  lastDate: DateTime.utc(2030, 3, 14))
-                              .then((value) => setState(() {
-                                    txtLogin.text = value.toString();
-                                  }));
-                        },
-                        icon: Icon(Icons.calendar_today, color: Colors.yellow)),
-                    labelText: 'Informe a validade',
-                    // hintText: _selectedDay.toString(),
-                    labelStyle: TextStyle(color: Colors.black),
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Flexible(
+                    child: TextField(
+                      controller: endereco,
+                      decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          labelText: 'Endereço',
+                          labelStyle: TextStyle(color: Colors.black)),
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
-                  style: TextStyle(color: Colors.black),
-                ),
+                  SizedBox(width: 5),
+                  Flexible(
+                      child: TextField(
+                    controller: numero,
+                    decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        labelText: 'Número',
+                        labelStyle: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Colors.black),
+                  ))
+                ]),
                 SizedBox(height: 30),
                 TextField(
-                  controller: txtHoras,
-                  readOnly: true,
+                  controller: celular,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          showTimePicker(context: context, initialTime: horas)
-                              .then((value) => setState(() {
-                                    txtHoras.text = value.toString();
-                                  }));
-                        },
-                        icon: Icon(Icons.lock_clock, color: Colors.yellow)),
-                    labelText: 'Ecolha a Hora',
-                    // hintText: _selectedDay.toString(),
-                    labelStyle: TextStyle(color: Colors.yellow),
-                  ),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      labelText: 'Telefone de contato',
+                      labelStyle: TextStyle(color: Colors.black)),
                   style: TextStyle(color: Colors.black),
-                ),*/
-                // ignore: deprecated_member_use
-                RaisedButton(
-                    child: Text(
-                      "Domingo",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => {
-                          setState(() {
-                            domingo = !domingo;
-                          })
-                        },
-                    color: domingo ? Colors.green : Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
-                RaisedButton(
-                    child: Text(
-                      "Segunda-Feira",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => {
-                          setState(() {
-                            segunda = !segunda;
-                          })
-                        },
-                    color: segunda ? Colors.green : Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
-                RaisedButton(
-                    child: Text(
-                      "Terça-Feira",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => {
-                          setState(() {
-                            terca = !terca;
-                          })
-                        },
-                    color: terca ? Colors.green : Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
-                RaisedButton(
-                    child: Text(
-                      "Quarta-Feira",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => {
-                          setState(() {
-                            quarta = !quarta;
-                          })
-                        },
-                    color: quarta ? Colors.green : Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
-                RaisedButton(
-                    child: Text(
-                      "Quinta-Feira",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => {
-                          setState(() {
-                            quinta = !quinta;
-                          })
-                        },
-                    color: quinta ? Colors.green : Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
-                RaisedButton(
-                    child: Text(
-                      "Sexta-Feira",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => {
-                          setState(() {
-                            sexta = !sexta;
-                          })
-                        },
-                    color: sexta ? Colors.green : Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
-                RaisedButton(
-                    child: Text(
-                      "Sábado",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () => {
-                          setState(() {
-                            sabado = !sabado;
-                          })
-                        },
-                    color: sabado ? Colors.green : Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
+                  keyboardType: TextInputType.number,
+                ),
                 SizedBox(height: 30),
                 Text(
-                  "Informe o horário do remédio: ",
+                  "Data da Consulta",
                   style: TextStyle(fontSize: 20),
                 ),
+                SizedBox(height: 15),
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Flexible(
+                    child: TextField(
+                      controller: dia,
+                      decoration: InputDecoration(
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          labelText: 'Dia',
+                          labelStyle: TextStyle(color: Colors.black)),
+                      style: TextStyle(color: Colors.black),
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  Flexible(
+                      child: TextField(
+                    controller: mes,
+                    decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        labelText: 'Mês',
+                        labelStyle: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Colors.black),
+                    keyboardType: TextInputType.number,
+                  )),
+                  SizedBox(width: 5),
+                  Flexible(
+                      child: TextField(
+                    controller: ano,
+                    decoration: InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        labelText: 'Ano',
+                        labelStyle: TextStyle(color: Colors.black)),
+                    style: TextStyle(color: Colors.black),
+                    keyboardType: TextInputType.number,
+                  ))
+                ]),
+                SizedBox(height: 30),
+                Text(
+                  "Horário da Consulta",
+                  style: TextStyle(fontSize: 20),
+                ),
+                SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -365,7 +313,6 @@ class _Calendario extends State<Calendario> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: 30),
                 Container(
                   padding: EdgeInsets.only(top: 20),
@@ -381,29 +328,27 @@ class _Calendario extends State<Calendario> {
                       },
                     )),
                     label: Text(
-                      'Cadastrar',
+                      'Registrar',
                       style: TextStyle(fontSize: 24),
                     ),
-                    icon: Icon(Icons.app_registration_rounded),
+                    icon: Icon(Icons.queue_play_next_rounded),
                     onPressed: () {
                       setState(() {
                         var db = FirebaseFirestore.instance;
-                        db.collection('Remedios').add({
-                          "nomeRemedio": nomeRemedio.text,
+                        db.collection('Consulta').add({
                           "nomeMedico": nomeMedico.text,
-                          "segunda": segunda,
-                          "terca": terca,
-                          "quarta": quarta,
-                          "quinta": quinta,
-                          "sexta": sexta,
-                          "sabado": sabado,
-                          "domingo": domingo,
+                          "endereco": endereco.text,
+                          "numero": numero.text,
+                          "celular": celular.text,
+                          "dia": dia.text,
+                          "mes": mes.text,
+                          "ano": ano.text,
                           "hora": hora,
                           "minuto": minuto,
                           "usuario": id
                         });
-                        Navigator.pushReplacementNamed(context, '/menu',
-                            arguments: id);
+                          Navigator.pushReplacementNamed(context, '/menu',
+                              arguments: id);
                       });
                     },
                   ),
