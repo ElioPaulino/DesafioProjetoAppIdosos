@@ -775,7 +775,44 @@ class _HomeState extends State<HomeState> {
                           "Horário: " + consulta.hora + " : " + consulta.minuto,
                           textAlign: TextAlign.left,
                           style: TextStyle(fontSize: 16, color: Colors.black),
-                        )
+                        ),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Colors.red,
+                          onPressed: () {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                //backgroundColor: Colors.purple,
+                                title: const Text(
+                                    'Tem certeza que deseja excluir?'),
+                                content: const Text(''),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'Cancelar');
+                                    },
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      count = 0;
+                                      FirebaseFirestore.instance
+                                          .collection("Consulta")
+                                          .doc(consulta.id)
+                                          .delete();
+                                      setState(() {});
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text('Sim'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            setState(() {});
+                          },
+                        ),
                       ]),
                       Row(children: <Widget>[
                         Text("Médico: " + consulta.nomeMedico,
@@ -801,6 +838,7 @@ class _HomeState extends State<HomeState> {
                                 fontSize: 16,
                                 color: Colors.black)),
                       ]),
+                      
                     ],
                   ),
                 )
