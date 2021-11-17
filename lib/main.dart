@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_desafio_elio_lucas/view/CadastroUsuario.dart';
 import 'package:projeto_desafio_elio_lucas/view/calendario.dart';
+import 'package:projeto_desafio_elio_lucas/view/consulta.dart';
 import 'package:projeto_desafio_elio_lucas/view/menu.dart';
 
 void main() async {
@@ -20,7 +21,8 @@ void main() async {
       '/primeira': (context) => PrimeiraTela(),
       '/menu': (context) => HomeState(),
       '/calendario': (context) => Calendario(),
-      '/cadastro': (context) => CadastroUsuario()
+      '/cadastro': (context) => CadastroUsuario(),
+      '/consulta': (context) => Consulta()
     },
     //Tema
     theme: ThemeData(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:projeto_desafio_elio_lucas/model/Consulta.dart';
 import 'package:projeto_desafio_elio_lucas/model/Remedio.dart';
 
 class HomeState extends StatefulWidget {
@@ -24,6 +23,9 @@ class _HomeState extends State<HomeState> {
   List<Remedio> listaRemedioSexta = [];
   List<Remedio> listaRemedioSabado = [];
   List<Remedio> listaRemedioDomingo = [];
+
+
+  List<Consulta> listaConsulta = [];
   void buscaDaListaTeste(Object? id) {
     final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
         .instance
@@ -237,7 +239,6 @@ class _HomeState extends State<HomeState> {
       print("Domingo size: " + listaRemedioDomingo.length.toString());
     });
   }
-
   var id;
   int count = 0;
 
@@ -302,6 +303,7 @@ class _HomeState extends State<HomeState> {
     buscaDaListaSexta(id);
     buscaDaListaSabado(id);
     buscaDaListaDomingo(id);
+    buscarConsultas(id);
 
     return Scaffold(
       appBar: AppBar(
@@ -486,7 +488,7 @@ class _HomeState extends State<HomeState> {
                           return Center(
                             child: Text("Quinta-Feira",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
+                                    fontWeight: FontWeight.bold, fontSize: 22)),
                           );
                         }
                         return listaRemedioQuinta.length != 0
@@ -585,57 +587,63 @@ class _HomeState extends State<HomeState> {
               child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              Card(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text("Cloroquina",
+              Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Row(children: <Widget>[
+                      Spacer(),
+                      Text("Marcar a consulta ",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.white)),
-                      Container(
-                        child: Column(
-                          children: <Widget>[
-                            Row(children: <Widget>[
-                              Text(
-                                "Médico que prescritor: ",
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
-                              )
-                            ]),
-                            Row(children: <Widget>[
-                              Text(
-                                "Função: ",
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
-                              )
-                            ]),
-                            Row(children: <Widget>[
-                              Text(
-                                "Validade: ",
-                                textAlign: TextAlign.left,
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.grey),
-                              )
-                            ]),
-                          ],
+                              fontSize: 22, fontWeight: FontWeight.bold)),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/consulta',
+                                arguments: id);
+                          },
+                          icon: Icon(Icons.add)),
+                      Spacer(),
+                    ]),
+                    Column(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: ListView.builder(
+                              itemCount: listaConsulta.length,
+                              itemBuilder: (context, index) {
+                                return listaConsulta.length != 0
+                                    ? listTileConsulta(
+                                        listaConsulta.elementAt(index))
+                                    : Container(
+                                        padding: EdgeInsets.only(top: 250),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Spacer(),
+                                              Icon(
+                                                Icons.not_interested_rounded,
+                                                color: Colors.grey,
+                                                size: 35,
+                                              ),
+                                              Text("Sem nenhuma Consulta",
+                                                  style: TextStyle(
+                                                      fontSize: 30,
+                                                      color: Colors.grey)),
+                                              Spacer(),
+                                            ]),
+                                      );
+                              }),
                         ),
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
-                elevation: 5,
-                margin: EdgeInsets.all(10),
-                color: Colors.purple[800],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
+              )
             ],
           )),
           Container(
@@ -729,6 +737,125 @@ class _HomeState extends State<HomeState> {
     );
   }
 
+  void buscarConsultas(Object? id) async {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Consulta')
+        .where("usuario", isEqualTo: id.toString())
+        .get();
+
+    a.then((value) {
+      listaConsulta.clear();
+      for (var item in value.docs) {
+        Consulta consulta = Consulta.fromJson(item.data(), item.id);
+        listaConsulta.add(consulta);
+      }
+    });
+  }
+
+  Widget listTileConsulta(Consulta consulta) {
+    return Column(
+      children: [
+        Card(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
+            child: Column(
+              children: <Widget>[
+                Text(consulta.dia + " / " + consulta.mes + " / " + consulta.ano,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black)),
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(children: <Widget>[
+                        Text(
+                          "Horário: " + consulta.hora + " : " + consulta.minuto,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Colors.red,
+                          onPressed: () {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                //backgroundColor: Colors.purple,
+                                title: const Text(
+                                    'Tem certeza que deseja excluir?'),
+                                content: const Text(''),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'Cancelar');
+                                    },
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      count = 0;
+                                      FirebaseFirestore.instance
+                                          .collection("Consulta")
+                                          .doc(consulta.id)
+                                          .delete();
+                                      setState(() {});
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text('Sim'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            setState(() {});
+                          },
+                        ),
+                      ]),
+                      Row(children: <Widget>[
+                        Text("Médico: " + consulta.nomeMedico,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                      Row(children: <Widget>[
+                        Text("Endereco: " + consulta.endereco,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                      Row(children: <Widget>[
+                        Text("Celular: " + consulta.celular,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                      
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          elevation: 5,
+          margin: EdgeInsets.all(10),
+          //color: Colors.purple[800],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget listTile(Remedio remedio) {
     return Column(
       children: [
@@ -775,7 +902,7 @@ class _HomeState extends State<HomeState> {
                               (remedio.sabado ? " Sab" : "") +
                               (remedio.domingo ? " Dom" : ""),
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         )
                       ]),
                       Row(children: <Widget>[
@@ -789,7 +916,7 @@ class _HomeState extends State<HomeState> {
                         Text(
                           " " + remedio.nomeMedico,
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         )
                       ]),
                       Row(children: <Widget>[
