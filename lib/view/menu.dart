@@ -24,6 +24,220 @@ class _HomeState extends State<HomeState> {
   List<Remedio> listaRemedioSexta = [];
   List<Remedio> listaRemedioSabado = [];
   List<Remedio> listaRemedioDomingo = [];
+  void buscaDaListaTeste(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedio.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedio.add(a);
+        print("aqui");
+      }
+      print("ALOU BB" + listaRemedio.length.toString());
+    });
+  }
+
+  void buscaDaListaSegunda(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .where("segunda", isEqualTo: true)
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedioSegunda.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedioSegunda.add(a);
+        print("aqui");
+      }
+      print("Segunda Size: " + listaRemedioSegunda.length.toString());
+    });
+  }
+
+  void buscaDaListaTerca(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .where("terca", isEqualTo: true)
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedioTerca.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedioTerca.add(a);
+        print("aqui");
+      }
+      print("Terca Size: " + listaRemedioTerca.length.toString());
+    });
+  }
+
+  void buscaDaListaQuarta(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .where("quarta", isEqualTo: true)
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedioQuarta.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedioQuarta.add(a);
+        print("aqui");
+      }
+      print("Quarta Size: " + listaRemedioQuarta.length.toString());
+    });
+  }
+
+  void buscaDaListaQuinta(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .where("quinta", isEqualTo: true)
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedioQuinta.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedioQuinta.add(a);
+        print("aqui");
+      }
+      print("Quinta Size: " + listaRemedioQuinta.length.toString());
+    });
+  }
+
+  void buscaDaListaSexta(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .where("sexta", isEqualTo: true)
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedioSexta.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedioSexta.add(a);
+        print("aqui");
+      }
+      print("Sexta Size: " + listaRemedioSexta.length.toString());
+    });
+  }
+
+  void buscaDaListaSabado(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .where("sabado", isEqualTo: true)
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedioSabado.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedioSabado.add(a);
+        print("aqui");
+      }
+      print("Sabado size: " + listaRemedioSabado.length.toString());
+    });
+  }
+
+  void buscaDaListaDomingo(Object? id) {
+    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
+        .instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: id.toString())
+        .where("domingo", isEqualTo: true)
+        .get();
+
+    a.then((value) {
+      /*Map<String, dynamic> a = value.docs[0].data();
+      print(value.size);
+      print(a['nomeRemedio']);
+    
+      a.forEach((key, value) {
+        print(key);
+        print(value);
+      });*/
+      listaRemedioDomingo.clear();
+      for (var item in value.docs) {
+        Remedio a = Remedio.fromJson(item.data(), item.id);
+        listaRemedioDomingo.add(a);
+      }
+      print("Domingo size: " + listaRemedioDomingo.length.toString());
+    });
+  }
+
   var id;
   int count = 0;
 
@@ -515,220 +729,6 @@ class _HomeState extends State<HomeState> {
     );
   }
 
-  void buscaDaListaTeste(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedio.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedio.add(a);
-        print("aqui");
-      }
-      print("ALOU BB" + listaRemedio.length.toString());
-    });
-  }
-
-  void buscaDaListaSegunda(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("segunda", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioSegunda.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioSegunda.add(a);
-        print("aqui");
-      }
-      print("Segunda Size: " + listaRemedioSegunda.length.toString());
-    });
-  }
-
-  void buscaDaListaTerca(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("terca", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioTerca.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioTerca.add(a);
-        print("aqui");
-      }
-      print("Terca Size: " + listaRemedioTerca.length.toString());
-    });
-  }
-
-  void buscaDaListaQuarta(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("quarta", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioQuarta.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioQuarta.add(a);
-        print("aqui");
-      }
-      print("Quarta Size: " + listaRemedioQuarta.length.toString());
-    });
-  }
-
-  void buscaDaListaQuinta(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("quinta", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioQuinta.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioQuinta.add(a);
-        print("aqui");
-      }
-      print("Quinta Size: " + listaRemedioQuinta.length.toString());
-    });
-  }
-
-  void buscaDaListaSexta(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("sexta", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioSexta.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioSexta.add(a);
-        print("aqui");
-      }
-      print("Sexta Size: " + listaRemedioSexta.length.toString());
-    });
-  }
-
-  void buscaDaListaSabado(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("sabado", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioSabado.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioSabado.add(a);
-        print("aqui");
-      }
-      print("Sabado size: " + listaRemedioSabado.length.toString());
-    });
-  }
-
-  void buscaDaListaDomingo(Object? id) async {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("domingo", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioDomingo.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioDomingo.add(a);
-      }
-      print("Domingo size: " + listaRemedioDomingo.length.toString());
-    });
-  }
-
   Widget listTile(Remedio remedio) {
     return Column(
       children: [
@@ -737,13 +737,25 @@ class _HomeState extends State<HomeState> {
             padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
             child: Column(
               children: <Widget>[
-                Text(remedio.nomeRemedio,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.yellow)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(" Remédio: ",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 23,
+                            color: Colors.yellow)),
+                    Text(remedio.nomeRemedio,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.yellow)),
+                  ],
+                ),
                 Container(
+                  padding: EdgeInsets.all(6),
                   child: Column(
                     children: <Widget>[
                       Row(children: <Widget>[
@@ -775,7 +787,7 @@ class _HomeState extends State<HomeState> {
                       ]),
                       Row(children: <Widget>[
                         Text(
-                          " "+remedio.nomeMedico,
+                          " " + remedio.nomeMedico,
                           textAlign: TextAlign.left,
                           style: TextStyle(fontSize: 18, color: Colors.grey),
                         )
@@ -787,9 +799,10 @@ class _HomeState extends State<HomeState> {
                           style: TextStyle(fontSize: 23, color: Colors.grey),
                         ),
                         SizedBox(
-                          width: 120,
+                          width: 100,
                         ),
                         IconButton(
+                          iconSize: 40,
                           icon: Icon(Icons.delete),
                           color: Colors.red,
                           onPressed: () {
@@ -810,13 +823,28 @@ class _HomeState extends State<HomeState> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      count = 0;
                                       FirebaseFirestore.instance
                                           .collection("Remedios")
                                           .doc(remedio.id)
                                           .delete();
-                                      setState(() {});
                                       Navigator.pop(context, 'OK');
+                                      listaRemedioSegunda.clear();
+                                      listaRemedioTerca.clear();
+                                      listaRemedioQuarta.clear();
+                                      listaRemedioQuinta.clear();
+                                      listaRemedioSexta.clear();
+                                      listaRemedioSabado.clear();
+                                      listaRemedioDomingo.clear();
+                                      buscaDaListaSegunda(id);
+                                      buscaDaListaTerca(id);
+                                      buscaDaListaQuarta(id);
+                                      buscaDaListaQuinta(id);
+                                      buscaDaListaSexta(id);
+                                      buscaDaListaSabado(id);
+                                      buscaDaListaDomingo(id);
+                                      count = 0;
+                                      for (int i = 0; i < 100000; i++) {}
+                                      setState(() {});
                                     },
                                     child: const Text('Sim'),
                                   ),
