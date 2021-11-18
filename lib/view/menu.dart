@@ -24,6 +24,7 @@ class _HomeState extends State<HomeState> {
   List<Remedio> listaRemedioSabado = [];
   List<Remedio> listaRemedioDomingo = [];
 
+  var lista;
 
   List<Consulta> listaConsulta = [];
   void buscaDaListaTeste(Object? id) {
@@ -239,6 +240,7 @@ class _HomeState extends State<HomeState> {
       print("Domingo size: " + listaRemedioDomingo.length.toString());
     });
   }
+
   var id;
   int count = 0;
 
@@ -266,6 +268,11 @@ class _HomeState extends State<HomeState> {
   void initState() {
     super.initState();
     _pageController = PageController();
+
+    lista = FirebaseFirestore.instance
+        .collection('Remedios')
+        .where("usuario", isEqualTo: "WLHfU4njWwgXvt43ZRNHqrllIu03")
+        .where("segunda", isEqualTo: true);
   }
 
   bool clickedCentreFAB = false;
@@ -382,205 +389,91 @@ class _HomeState extends State<HomeState> {
                 ],
               )),
           Container(
-            child: ListView(
+            child: ListView.builder(
+              itemCount: 7,
               scrollDirection: Axis.horizontal,
               physics: PageScrollPhysics(),
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: listaRemedioSegunda.length + 1,
-                      itemBuilder: (context, index) {
-                        if (segundaCount == 1) {
-                          segundaCount = 0;
-                          tercaCount = 1;
-                          quartaCount = 1;
-                          quintaCount = 1;
-                          sextaCount = 1;
-                          sabadoCount = 1;
-                          domingoCount = 1;
-                          return Center(
-                            child: Text("Segunda-Feira",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
-                          );
-                        }
-                        return listaRemedioSegunda.length != 0
-                            ? listTile(listaRemedioSegunda.elementAt(index - 1))
-                            : Container(
-                                padding: EdgeInsets.all(4),
-                                child: Center(child: Text("Sem rémedios")),
-                              );
-                      }),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: listaRemedioTerca.length + 1,
-                      itemBuilder: (context, index) {
-                        if (tercaCount == 1) {
-                          segundaCount = 1;
-                          tercaCount = 0;
-                          quartaCount = 1;
-                          quintaCount = 1;
-                          sextaCount = 1;
-                          sabadoCount = 1;
-                          domingoCount = 1;
-                          tercaCount = 0;
-                          return Center(
-                            child: Text("Terça-Feira",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
-                          );
-                        }
-                        print("Oobba " + index.toString());
-                        return listaRemedioTerca.length != 0
-                            ? listTile(listaRemedioTerca.elementAt(index - 1))
-                            : Container(
-                                child: Text("Sem rémedios"),
-                              );
-                      }),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: listaRemedioQuarta.length + 1,
-                      itemBuilder: (context, index) {
-                        if (quartaCount == 1) {
-                          segundaCount = 1;
-                          tercaCount = 1;
-                          quartaCount = 0;
-                          quintaCount = 1;
-                          sextaCount = 1;
-                          sabadoCount = 1;
-                          domingoCount = 1;
-                          quartaCount = 0;
-                          return Center(
-                            child: Text("Quarta-Feira",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
-                          );
-                        }
-                        return listaRemedioQuarta.length != 0
-                            ? listTile(listaRemedioQuarta.elementAt(index - 1))
-                            : Container(
-                                child: Text("Sem rémedios"),
-                              );
-                      }),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: listaRemedioQuinta.length + 1,
-                      itemBuilder: (context, index) {
-                        if (quintaCount == 1) {
-                          segundaCount = 1;
-                          tercaCount = 1;
-                          quartaCount = 1;
-                          quintaCount = 0;
-                          sextaCount = 1;
-                          sabadoCount = 1;
-                          domingoCount = 1;
-                          return Center(
-                            child: Text("Quinta-Feira",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 22)),
-                          );
-                        }
-                        return listaRemedioQuinta.length != 0
-                            ? listTile(listaRemedioQuinta.elementAt(index - 1))
-                            : Container(
-                                child: Text("Sem rémedios"),
-                              );
-                      }),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: listaRemedioSexta.length + 1,
-                      itemBuilder: (context, index) {
-                        if (sextaCount == 1) {
-                          segundaCount = 1;
-                          tercaCount = 1;
-                          quartaCount = 1;
-                          quintaCount = 1;
-                          sextaCount = 0;
-                          sabadoCount = 1;
-                          domingoCount = 1;
-                          return Center(
-                            child: Text("Sexta-Feira",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
-                          );
-                        }
-                        return listaRemedioSexta.length != 0
-                            ? listTile(listaRemedioSexta.elementAt(index - 1))
-                            : Container(
-                                child: Text("Sem rémedios"),
-                              );
-                      }),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: listaRemedioSabado.length + 1,
-                      itemBuilder: (context, index) {
-                        if (sabadoCount == 1) {
-                          segundaCount = 1;
-                          tercaCount = 1;
-                          quartaCount = 1;
-                          quintaCount = 1;
-                          sextaCount = 1;
-                          sabadoCount = 0;
-                          domingoCount = 1;
-                          sabadoCount = 0;
-                          return Center(
-                            child: Text("Sábado",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
-                          );
-                        }
-                        return listaRemedioSabado.length != 0
-                            ? listTile(listaRemedioSabado.elementAt(index - 1))
-                            : Container(
-                                child: Text("Sem rémedios"),
-                              );
-                      }),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                      itemCount: listaRemedioDomingo.length + 1,
-                      itemBuilder: (context, index) {
-                        if (domingoCount == 1) {
-                          segundaCount = 1;
-                          tercaCount = 1;
-                          quartaCount = 1;
-                          quintaCount = 1;
-                          sextaCount = 1;
-                          sabadoCount = 1;
-                          domingoCount = 0;
-                          return Center(
-                            child: Text("Domingo",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 23)),
-                          );
-                        }
-                        return listaRemedioDomingo.length != 0
-                            ? listTile(listaRemedioDomingo.elementAt(index - 1))
-                            : Container(
-                                child: Text("Sem rémedios"),
-                              );
-                      }),
-                ),
-              ],
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    Text(index.toString()),
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('Remedios')
+                                .where("usuario",
+                                    isEqualTo: "WLHfU4njWwgXvt43ZRNHqrllIu03")
+                                .where("dia_semana",
+                                    isEqualTo: index.toString())
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return Center(child: Text('Erro'));
+                                case ConnectionState.waiting:
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                default:
+                                  final dados = snapshot.requireData;
+                                  print("SIZE = " + dados.size.toString());
+
+                                  return ListView.builder(
+                                      itemCount: dados.size,
+                                      itemBuilder: (context, index) {
+                                        /*if (segundaCount == 1) {
+                                          segundaCount = 0;
+                                          tercaCount = 1;
+                                          quartaCount = 1;
+                                          quintaCount = 1;
+                                          sextaCount = 1;
+                                          sabadoCount = 1;
+                                          domingoCount = 1;
+                                          return Center(
+                                            child: Text("Segunda-Feira",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 23)),
+                                          );
+                                        }*/
+                                        return listTile(dados.docs[index]);
+                                      });
+                              }
+                            }
+
+                            /*
+                          child: ListView.builder(
+                              itemCount: listaRemedioSegunda.length + 1,
+                              itemBuilder: (context, index) {
+                                if (segundaCount == 1) {
+                                  segundaCount = 0;
+                                  tercaCount = 1;
+                                  quartaCount = 1;
+                                  quintaCount = 1;
+                                  sextaCount = 1;
+                                  sabadoCount = 1;
+                                  domingoCount = 1;
+                                  return Center(
+                                    child: Text("Segunda-Feira",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold, fontSize: 23)),
+                                  );
+                                }
+                                return listaRemedioSegunda.length != 0
+                                    ? listTile(listaRemedioSegunda.elementAt(index - 1))
+                                    : Container(
+                                        padding: EdgeInsets.all(4),
+                                        child: Center(child: Text("Sem rémedios")),
+                                      );
+                              }),*/
+                            ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
           Container(
@@ -838,7 +731,6 @@ class _HomeState extends State<HomeState> {
                                 fontSize: 16,
                                 color: Colors.black)),
                       ]),
-                      
                     ],
                   ),
                 )
@@ -856,7 +748,8 @@ class _HomeState extends State<HomeState> {
     );
   }
 
-  Widget listTile(Remedio remedio) {
+  Widget listTile(item) {
+    Remedio remedio = Remedio.fromJson(item.data(), item.id);
     return Column(
       children: [
         Card(
