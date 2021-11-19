@@ -4,6 +4,8 @@ import 'package:projeto_desafio_elio_lucas/model/Consulta.dart';
 import 'package:projeto_desafio_elio_lucas/model/Remedio.dart';
 
 class HomeState extends StatefulWidget {
+  final String uid;
+  HomeState({required this.uid});
   @override
   _HomeState createState() => _HomeState();
 }
@@ -15,264 +17,30 @@ class _HomeState extends State<HomeState> {
   late String idade = "";
   late String sexo = "";
   late Remedio remedio;
-  List<Remedio> listaRemedio = [];
-  List<Remedio> listaRemedioSegunda = [];
-  List<Remedio> listaRemedioTerca = [];
-  List<Remedio> listaRemedioQuarta = [];
-  List<Remedio> listaRemedioQuinta = [];
-  List<Remedio> listaRemedioSexta = [];
-  List<Remedio> listaRemedioSabado = [];
-  List<Remedio> listaRemedioDomingo = [];
-
   var lista;
 
   List<Consulta> listaConsulta = [];
-  void buscaDaListaTeste(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedio.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedio.add(a);
-        print("aqui");
-      }
-      print("ALOU BB" + listaRemedio.length.toString());
-    });
-  }
-
-  void buscaDaListaSegunda(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("segunda", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioSegunda.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioSegunda.add(a);
-        print("aqui");
-      }
-      print("Segunda Size: " + listaRemedioSegunda.length.toString());
-    });
-  }
-
-  void buscaDaListaTerca(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("terca", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioTerca.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioTerca.add(a);
-        print("aqui");
-      }
-      print("Terca Size: " + listaRemedioTerca.length.toString());
-    });
-  }
-
-  void buscaDaListaQuarta(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("quarta", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioQuarta.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioQuarta.add(a);
-        print("aqui");
-      }
-      print("Quarta Size: " + listaRemedioQuarta.length.toString());
-    });
-  }
-
-  void buscaDaListaQuinta(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("quinta", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioQuinta.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioQuinta.add(a);
-        print("aqui");
-      }
-      print("Quinta Size: " + listaRemedioQuinta.length.toString());
-    });
-  }
-
-  void buscaDaListaSexta(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("sexta", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioSexta.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioSexta.add(a);
-        print("aqui");
-      }
-      print("Sexta Size: " + listaRemedioSexta.length.toString());
-    });
-  }
-
-  void buscaDaListaSabado(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("sabado", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioSabado.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioSabado.add(a);
-        print("aqui");
-      }
-      print("Sabado size: " + listaRemedioSabado.length.toString());
-    });
-  }
-
-  void buscaDaListaDomingo(Object? id) {
-    final Future<QuerySnapshot<Map<String, dynamic>>> a = FirebaseFirestore
-        .instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: id.toString())
-        .where("domingo", isEqualTo: true)
-        .get();
-
-    a.then((value) {
-      /*Map<String, dynamic> a = value.docs[0].data();
-      print(value.size);
-      print(a['nomeRemedio']);
-    
-      a.forEach((key, value) {
-        print(key);
-        print(value);
-      });*/
-      listaRemedioDomingo.clear();
-      for (var item in value.docs) {
-        Remedio a = Remedio.fromJson(item.data(), item.id);
-        listaRemedioDomingo.add(a);
-      }
-      print("Domingo size: " + listaRemedioDomingo.length.toString());
-    });
-  }
 
   var id;
   int count = 0;
 
-  getDocumentById(String id) async {
+  getDocumentById() async {
     await FirebaseFirestore.instance
         .collection('Usuarios')
-        .doc(id)
+        .doc(widget.uid)
         .get()
         .then((value) {
       nome = value.data()!['nome'].toString();
       idade = value.data()!['idade'].toString();
       sexo = value.data()!['sexo'].toString();
-      print(nome);
-      print(idade);
-      print(sexo);
     });
-    if (count == 0) {
-      setState(() {
-        count = 1;
-      });
-    }
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-
-    lista = FirebaseFirestore.instance
-        .collection('Remedios')
-        .where("usuario", isEqualTo: "WLHfU4njWwgXvt43ZRNHqrllIu03")
-        .where("segunda", isEqualTo: true);
   }
 
   bool clickedCentreFAB = false;
@@ -293,23 +61,9 @@ class _HomeState extends State<HomeState> {
 
   @override
   Widget build(BuildContext context) {
-    late int segundaCount = 1;
-    late int tercaCount = 1;
-    late int quartaCount = 1;
-    late int quintaCount = 1;
-    late int sextaCount = 1;
-    late int sabadoCount = 1;
-    late int domingoCount = 1;
-    id = ModalRoute.of(context)?.settings.arguments;
-    getDocumentById(id.toString());
-    buscaDaListaTeste(id);
-    buscaDaListaSegunda(id);
-    buscaDaListaTerca(id);
-    buscaDaListaQuarta(id);
-    buscaDaListaQuinta(id);
-    buscaDaListaSexta(id);
-    buscaDaListaSabado(id);
-    buscaDaListaDomingo(id);
+    id = widget.uid;
+    getDocumentById();
+    setState(() {});
     buscarConsultas(id);
 
     return Scaffold(
@@ -396,7 +150,25 @@ class _HomeState extends State<HomeState> {
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    Text(index.toString()),
+                    Text(
+                        (index == 0
+                            ? "Segunda - Feira"
+                            : index == 1
+                                ? "Terca - Feira"
+                                : index == 2
+                                    ? "Quarta - Feira"
+                                    : index == 3
+                                        ? "Quinta - Feira"
+                                        : index == 4
+                                            ? "Sexta - Feira"
+                                            : index == 5
+                                                ? "Sabado"
+                                                : index == 6
+                                                    ? "Domingo"
+                                                    : ""),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold)),
                     Expanded(
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -404,10 +176,24 @@ class _HomeState extends State<HomeState> {
                         child: StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('Remedios')
-                                .where("usuario",
-                                    isEqualTo: "WLHfU4njWwgXvt43ZRNHqrllIu03")
-                                .where("dia_semana",
-                                    isEqualTo: index.toString())
+                                .where("usuario", isEqualTo: id.toString())
+                                .where(
+                                    (index == 0
+                                        ? "segunda"
+                                        : index == 1
+                                            ? "terca"
+                                            : index == 2
+                                                ? "quarta"
+                                                : index == 3
+                                                    ? "quinta"
+                                                    : index == 4
+                                                        ? "sexta"
+                                                        : index == 5
+                                                            ? "sabado"
+                                                            : index == 6
+                                                                ? "domingo"
+                                                                : ""),
+                                    isEqualTo: true)
                                 .snapshots(),
                             builder: (context, snapshot) {
                               switch (snapshot.connectionState) {
@@ -418,57 +204,13 @@ class _HomeState extends State<HomeState> {
                                       child: CircularProgressIndicator());
                                 default:
                                   final dados = snapshot.requireData;
-                                  print("SIZE = " + dados.size.toString());
-
                                   return ListView.builder(
                                       itemCount: dados.size,
                                       itemBuilder: (context, index) {
-                                        /*if (segundaCount == 1) {
-                                          segundaCount = 0;
-                                          tercaCount = 1;
-                                          quartaCount = 1;
-                                          quintaCount = 1;
-                                          sextaCount = 1;
-                                          sabadoCount = 1;
-                                          domingoCount = 1;
-                                          return Center(
-                                            child: Text("Segunda-Feira",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 23)),
-                                          );
-                                        }*/
                                         return listTile(dados.docs[index]);
                                       });
                               }
-                            }
-
-                            /*
-                          child: ListView.builder(
-                              itemCount: listaRemedioSegunda.length + 1,
-                              itemBuilder: (context, index) {
-                                if (segundaCount == 1) {
-                                  segundaCount = 0;
-                                  tercaCount = 1;
-                                  quartaCount = 1;
-                                  quintaCount = 1;
-                                  sextaCount = 1;
-                                  sabadoCount = 1;
-                                  domingoCount = 1;
-                                  return Center(
-                                    child: Text("Segunda-Feira",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold, fontSize: 23)),
-                                  );
-                                }
-                                return listaRemedioSegunda.length != 0
-                                    ? listTile(listaRemedioSegunda.elementAt(index - 1))
-                                    : Container(
-                                        padding: EdgeInsets.all(4),
-                                        child: Center(child: Text("Sem rémedios")),
-                                      );
-                              }),*/
-                            ),
+                            }),
                       ),
                     ),
                   ],
@@ -477,68 +219,58 @@ class _HomeState extends State<HomeState> {
             ),
           ),
           Container(
-              child: ListView(
-            scrollDirection: Axis.vertical,
-            children: <Widget>[
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
+            child: ListView.builder(
+              itemCount: 1,
+              scrollDirection: Axis.horizontal,
+              physics: PageScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
                     Row(children: <Widget>[
-                      Spacer(),
                       Text("Marcar a consulta ",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold)),
-                      Spacer(),
                       IconButton(
                           onPressed: () {
                             Navigator.pushNamed(context, '/consulta',
                                 arguments: id);
                           },
                           icon: Icon(Icons.add)),
-                      Spacer(),
                     ]),
-                    Column(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height,
-                          child: ListView.builder(
-                              itemCount: listaConsulta.length,
-                              itemBuilder: (context, index) {
-                                return listaConsulta.length != 0
-                                    ? listTileConsulta(
-                                        listaConsulta.elementAt(index))
-                                    : Container(
-                                        padding: EdgeInsets.only(top: 250),
-                                        child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Spacer(),
-                                              Icon(
-                                                Icons.not_interested_rounded,
-                                                color: Colors.grey,
-                                                size: 35,
-                                              ),
-                                              Text("Sem nenhuma Consulta",
-                                                  style: TextStyle(
-                                                      fontSize: 30,
-                                                      color: Colors.grey)),
-                                              Spacer(),
-                                            ]),
-                                      );
-                              }),
-                        ),
-                      ],
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('Consulta')
+                                .where("usuario", isEqualTo: id.toString())
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return Center(child: Text('Erro'));
+                                case ConnectionState.waiting:
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                default:
+                                  final dados = snapshot.requireData;
+                                  return ListView.builder(
+                                      itemCount: dados.size,
+                                      itemBuilder: (context, index) {
+                                        return listTileConsulta(
+                                            dados.docs[index]);
+                                      });
+                              }
+                            }),
+                      ),
                     ),
                   ],
-                ),
-              )
-            ],
-          )),
+                );
+              },
+            ),
+          ),
           Container(
               //color: Colors.pink,
               ),
@@ -646,7 +378,8 @@ class _HomeState extends State<HomeState> {
     });
   }
 
-  Widget listTileConsulta(Consulta consulta) {
+  Widget listTileConsulta(item) {
+    Consulta consulta = Consulta.fromJson(item.data(), item.id);
     return Column(
       children: [
         Card(
@@ -826,7 +559,6 @@ class _HomeState extends State<HomeState> {
                           icon: Icon(Icons.delete),
                           color: Colors.red,
                           onPressed: () {
-                            print("Excluir");
                             showDialog<String>(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
@@ -848,23 +580,6 @@ class _HomeState extends State<HomeState> {
                                           .doc(remedio.id)
                                           .delete();
                                       Navigator.pop(context, 'OK');
-                                      listaRemedioSegunda.clear();
-                                      listaRemedioTerca.clear();
-                                      listaRemedioQuarta.clear();
-                                      listaRemedioQuinta.clear();
-                                      listaRemedioSexta.clear();
-                                      listaRemedioSabado.clear();
-                                      listaRemedioDomingo.clear();
-                                      buscaDaListaSegunda(id);
-                                      buscaDaListaTerca(id);
-                                      buscaDaListaQuarta(id);
-                                      buscaDaListaQuinta(id);
-                                      buscaDaListaSexta(id);
-                                      buscaDaListaSabado(id);
-                                      buscaDaListaDomingo(id);
-                                      count = 0;
-                                      for (int i = 0; i < 100000; i++) {}
-                                      setState(() {});
                                     },
                                     child: const Text('Sim'),
                                   ),
@@ -874,19 +589,6 @@ class _HomeState extends State<HomeState> {
                             setState(() {});
                           },
                         ),
-                        /*SizedBox(
-                          width: 10,
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          color: Colors.black,
-                          onPressed: () {
-                            print("Editar");
-                            Navigator.pushNamed(
-                                          context, '/calendario',
-                                          arguments: id);
-                          },
-                        ),*/
                       ]),
                     ],
                   ),
