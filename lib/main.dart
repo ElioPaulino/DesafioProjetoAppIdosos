@@ -19,7 +19,6 @@ void main() async {
     initialRoute: '/primeira',
     routes: {
       '/primeira': (context) => PrimeiraTela(),
-      '/menu': (context) => HomeState(),
       '/calendario': (context) => Calendario(),
       '/cadastro': (context) => CadastroUsuario(),
       '/consulta': (context) => Consulta()
@@ -138,8 +137,14 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
           .get()
           .then((value) {
         if (value.data()!['nome'].toString().isNotEmpty) {
-          Navigator.pushReplacementNamed(context, '/menu',
-              arguments: resultado.user!.uid);
+          /*Navigator.pushReplacementNamed(context, '/menu',
+              arguments: resultado.user!.uid);*/
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeState(
+                        uid: resultado.user!.uid,
+                      )));
         }
       });
     }).catchError((erro) {
