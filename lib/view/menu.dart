@@ -34,7 +34,10 @@ class _HomeState extends State<HomeState> {
       idade = value.data()!['idade'].toString();
       sexo = value.data()!['sexo'].toString();
     });
-    setState(() {});
+    if (count == 0) {
+      setState(() {});
+      count = 1;
+    }
   }
 
   @override
@@ -63,7 +66,6 @@ class _HomeState extends State<HomeState> {
   Widget build(BuildContext context) {
     id = widget.uid;
     getDocumentById();
-    setState(() {});
     buscarConsultas(id);
 
     return Scaffold(
