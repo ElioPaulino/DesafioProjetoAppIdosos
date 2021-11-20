@@ -82,202 +82,296 @@ class _HomeState extends State<HomeState> {
         ],
       ),
       body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {});
-        },
-        children: <Widget>[
-          Container(
-              padding: EdgeInsets.all(14),
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: <Widget>[
-                  Container(
-                      padding: EdgeInsets.all(10),
-                      child: Center(
-                          child: Text("Informações pessoais",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 23)))),
-                  Card(
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
-                      child: Column(
-                        children: <Widget>[
-                          Text("Seja bem-vindo\n " + nome,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.yellow)),
-                          Container(
-                            child: Column(
-                              children: <Widget>[
-                                Row(children: <Widget>[
-                                  Text(
-                                    "Sexo: " + sexo,
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  )
-                                ]),
-                                Row(children: <Widget>[
-                                  Text(
-                                    "Idade: " + idade,
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                        fontSize: 14, color: Colors.white),
-                                  )
-                                ]),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    elevation: 5,
-                    margin: EdgeInsets.all(10),
-                    color: Colors.purple[800],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ],
-              )),
-          Container(
-            child: ListView.builder(
-              itemCount: 7,
-              scrollDirection: Axis.horizontal,
-              physics: PageScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Text(
-                        (index == 0
-                            ? "Segunda - Feira"
-                            : index == 1
-                                ? "Terca - Feira"
-                                : index == 2
-                                    ? "Quarta - Feira"
-                                    : index == 3
-                                        ? "Quinta - Feira"
-                                        : index == 4
-                                            ? "Sexta - Feira"
-                                            : index == 5
-                                                ? "Sabado"
-                                                : index == 6
-                                                    ? "Domingo"
-                                                    : ""),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold)),
-                    Expanded(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {});
+          },
+          children: <Widget>[
+            Container(
+                color: Colors.yellow[100],
+                padding: EdgeInsets.all(14),
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  children: <Widget>[
+                    Container(
+                        padding: EdgeInsets.all(10),
+                        child: Center(
+                            child: Text("Informações pessoais",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 23)))),
+                    Card(
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('Remedios')
-                                .where("usuario", isEqualTo: id.toString())
-                                .where(
-                                    (index == 0
-                                        ? "segunda"
-                                        : index == 1
-                                            ? "terca"
-                                            : index == 2
-                                                ? "quarta"
-                                                : index == 3
-                                                    ? "quinta"
-                                                    : index == 4
-                                                        ? "sexta"
-                                                        : index == 5
-                                                            ? "sabado"
-                                                            : index == 6
-                                                                ? "domingo"
-                                                                : ""),
-                                    isEqualTo: true)
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return Center(child: Text('Erro'));
-                                case ConnectionState.waiting:
-                                  return Center(
-                                      child: CircularProgressIndicator());
-                                default:
-                                  final dados = snapshot.requireData;
-                                  return ListView.builder(
-                                      itemCount: dados.size,
-                                      itemBuilder: (context, index) {
-                                        return listTile(dados.docs[index]);
-                                      });
-                              }
-                            }),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 5.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text("Seja bem-vindo\n " + nome,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.yellow)),
+                            Container(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(children: <Widget>[
+                                    Text(
+                                      "Sexo: " + sexo,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
+                                    )
+                                  ]),
+                                  Row(children: <Widget>[
+                                    Text(
+                                      "Idade: " + idade,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 14, color: Colors.white),
+                                    )
+                                  ]),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      elevation: 5,
+                      margin: EdgeInsets.all(10),
+                      color: Colors.purple[800],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ],
-                );
-              },
-            ),
-          ),
-          Container(
-            child: ListView.builder(
-              itemCount: 1,
-              scrollDirection: Axis.horizontal,
-              physics: PageScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    Row(children: <Widget>[
-                      Text("Marcar a consulta ",
+                )),
+            Container(
+              color: Colors.yellow[100],
+              child: ListView.builder(
+                itemCount: 7,
+                scrollDirection: Axis.horizontal,
+                physics: PageScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Text(
+                          (index == 0
+                              ? "Segunda - Feira"
+                              : index == 1
+                                  ? "Terca - Feira"
+                                  : index == 2
+                                      ? "Quarta - Feira"
+                                      : index == 3
+                                          ? "Quinta - Feira"
+                                          : index == 4
+                                              ? "Sexta - Feira"
+                                              : index == 5
+                                                  ? "Sabado"
+                                                  : index == 6
+                                                      ? "Domingo"
+                                                      : ""),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold)),
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/consulta',
-                                arguments: id);
-                          },
-                          icon: Icon(Icons.add)),
-                    ]),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('Consulta')
-                                .where("usuario", isEqualTo: id.toString())
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              switch (snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return Center(child: Text('Erro'));
-                                case ConnectionState.waiting:
-                                  return Center(
-                                      child: CircularProgressIndicator());
-                                default:
-                                  final dados = snapshot.requireData;
-                                  return ListView.builder(
-                                      itemCount: dados.size,
-                                      itemBuilder: (context, index) {
-                                        return listTileConsulta(
-                                            dados.docs[index]);
-                                      });
-                              }
-                            }),
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Remedios')
+                                  .where("usuario", isEqualTo: id.toString())
+                                  .where(
+                                      (index == 0
+                                          ? "segunda"
+                                          : index == 1
+                                              ? "terca"
+                                              : index == 2
+                                                  ? "quarta"
+                                                  : index == 3
+                                                      ? "quinta"
+                                                      : index == 4
+                                                          ? "sexta"
+                                                          : index == 5
+                                                              ? "sabado"
+                                                              : index == 6
+                                                                  ? "domingo"
+                                                                  : ""),
+                                      isEqualTo: true)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.none:
+                                    return Center(child: Text('Erro'));
+                                  case ConnectionState.waiting:
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  default:
+                                    final dados = snapshot.requireData;
+                                    return ListView.builder(
+                                        itemCount: dados.size,
+                                        itemBuilder: (context, index) {
+                                          return listTile(dados.docs[index]);
+                                        });
+                                }
+                              }),
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          Container(
-              //color: Colors.pink,
+                    ],
+                  );
+                },
               ),
-        ],
-      ),
+            ),
+            Container(
+              color: Colors.yellow[100],
+              child: ListView.builder(
+                itemCount: 1,
+                scrollDirection: Axis.horizontal,
+                physics: PageScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Card(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 5.0),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: Column(children: <Widget>[
+                                  Row(children: <Widget>[
+                                    Text("Marcar a consulta ",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold)),
+                                    IconButton(
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context, '/consulta',
+                                              arguments: id);
+                                        },
+                                        icon: Icon(Icons.add)),
+                                  ]),
+                                ]),
+                              )
+                            ],
+                          ),
+                        ),
+                        elevation: 5,
+                        margin: EdgeInsets.all(10),
+                        color: Colors.yellow,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('Consulta')
+                                  .where("usuario", isEqualTo: id.toString())
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.none:
+                                    return Center(child: Text('Erro'));
+                                  case ConnectionState.waiting:
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  default:
+                                    final dados = snapshot.requireData;
+                                    return ListView.builder(
+                                        itemCount: dados.size,
+                                        itemBuilder: (context, index) {
+                                          return listTileConsulta(
+                                              dados.docs[index]);
+                                        });
+                                }
+                              }),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            Container(
+              color: Colors.yellow[100],
+              child: SingleChildScrollView(
+                  child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(40),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                          child: Text("Informações Sobre o App",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 23))),
+                      SizedBox(height: 20),
+                      ListTile(
+                        title: Text('Tema escolhido',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold)),
+                        subtitle: Text(
+                            'O tema escolhido no 12º desafio da Engenharia da Computação - UNAERP foi realizar um aplicativo que auxilie os idosos com os smartphones.',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontStyle: FontStyle.italic)),
+                      ),
+                      Divider(),
+                      SizedBox(height: 20),
+                      ListTile(
+                          title: Text('Objetivo do aplicativo',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
+                          subtitle: Text(
+                              "Em meio ao crescimento exponente do uso de tecnologias, frequentemente o público idoso relata dificuldade em lidar com elas.\nO aplicativo Hora do Remédio visa tornar o acesso desse público a essas tecnologias mais eficiente e simples, colaborando para a organização da rotina de medicamentos e consultas médicas de forma prática e intuitiva.",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Divider(),
+                      SizedBox(height: 20),
+                      ListTile(
+                          title: Text('Versão do aplicativo: 1.0',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
+                          subtitle: Text(
+                              "O aplicativo na versão 1.0 disponibiliza o cadastro de remédio e o cadastro das consultas. Na versão 1.1 o aplicativo disponibilizará o serviço de nofiticação.",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                      Divider(),
+                      SizedBox(height: 20),
+                      ListTile(
+                          title: Text('Desenvolvedores',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
+                          subtitle: Text(
+                              "Elio Antonio Paulino Junior\nLucas da Cunha Alves",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))),
+                    ]),
+              )),
+            )
+          ]),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -389,18 +483,48 @@ class _HomeState extends State<HomeState> {
             padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 5.0),
             child: Column(
               children: <Widget>[
-                Text(consulta.dia + " / " + consulta.mes + " / " + consulta.ano,
+                Text("MÉDICO: " + consulta.nomeMedico,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black)),
+                        fontSize: 20,
+                        color: Colors.purple[800])),
                 Container(
                   child: Column(
                     children: <Widget>[
                       Row(children: <Widget>[
+                        Text("ENDEREÇO: " + consulta.endereco,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                      Row(children: <Widget>[
+                        Text("TELEFONE: " + consulta.celular,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
+                      ]),
+                      Row(children: <Widget>[
                         Text(
-                          "Horário: " + consulta.hora + " : " + consulta.minuto,
+                            "DATA: " +
+                                consulta.dia +
+                                " / " +
+                                consulta.mes +
+                                " / " +
+                                consulta.ano,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                //  fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black))
+                      ]),
+                      Row(children: <Widget>[
+                        Text(
+                          "HORÁRIO: " + consulta.hora + " : " + consulta.minuto,
                           textAlign: TextAlign.left,
                           style: TextStyle(fontSize: 16, color: Colors.black),
                         ),
@@ -442,30 +566,6 @@ class _HomeState extends State<HomeState> {
                           },
                         ),
                       ]),
-                      Row(children: <Widget>[
-                        Text("Médico: " + consulta.nomeMedico,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                //fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black)),
-                      ]),
-                      Row(children: <Widget>[
-                        Text("Endereco: " + consulta.endereco,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                //fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black)),
-                      ]),
-                      Row(children: <Widget>[
-                        Text("Celular: " + consulta.celular,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                //fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.black)),
-                      ]),
                     ],
                   ),
                 )
@@ -474,7 +574,7 @@ class _HomeState extends State<HomeState> {
           ),
           elevation: 5,
           margin: EdgeInsets.all(10),
-          //color: Colors.purple[800],
+          color: Colors.purple[100],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -500,13 +600,13 @@ class _HomeState extends State<HomeState> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 23,
-                            color: Colors.yellow)),
+                            color: Colors.purple[800])),
                     Text(remedio.nomeRemedio,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.yellow)),
+                            color: Colors.purple[800])),
                   ],
                 ),
                 Container(
@@ -517,7 +617,7 @@ class _HomeState extends State<HomeState> {
                         Text(
                           "Dias da semana: ",
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 23, color: Colors.grey),
+                          style: TextStyle(fontSize: 23, color: Colors.black),
                         )
                       ]),
                       Row(children: <Widget>[
@@ -530,28 +630,28 @@ class _HomeState extends State<HomeState> {
                               (remedio.sabado ? " Sab" : "") +
                               (remedio.domingo ? " Dom" : ""),
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.black),
                         )
                       ]),
                       Row(children: <Widget>[
                         Text(
                           "Nome do médico: ",
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 23, color: Colors.grey),
+                          style: TextStyle(fontSize: 23, color: Colors.black),
                         )
                       ]),
                       Row(children: <Widget>[
                         Text(
                           " " + remedio.nomeMedico,
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.black),
                         )
                       ]),
                       Row(children: <Widget>[
                         Text(
                           "Horário: " + remedio.hora + " : " + remedio.minuto,
                           textAlign: TextAlign.left,
-                          style: TextStyle(fontSize: 23, color: Colors.grey),
+                          style: TextStyle(fontSize: 23, color: Colors.black),
                         ),
                         SizedBox(
                           width: 100,
@@ -564,7 +664,7 @@ class _HomeState extends State<HomeState> {
                             showDialog<String>(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
-                                backgroundColor: Colors.purple,
+                                // backgroundColor: Colors.purple,
                                 title: const Text(
                                     'Tem certeza que deseja excluir?'),
                                 content: const Text(''),
@@ -600,7 +700,7 @@ class _HomeState extends State<HomeState> {
           ),
           elevation: 5,
           margin: EdgeInsets.all(10),
-          color: Colors.purple[800],
+          color: Colors.purple[100],
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
