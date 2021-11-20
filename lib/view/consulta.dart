@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'menu.dart';
+
 class Consulta extends StatefulWidget {
   @override
   _Calendario createState() => _Calendario();
@@ -347,8 +349,14 @@ class _Calendario extends State<Consulta> {
                           "minuto": minuto,
                           "usuario": id
                         });
-                          Navigator.pushReplacementNamed(context, '/menu',
-                              arguments: id);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeState(
+                                      uid: id.toString(),
+                                    )));
+//                          Navigator.pushReplacementNamed(context, '/menu',
+//                              arguments: id);
                       });
                     },
                   ),

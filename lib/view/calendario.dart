@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_desafio_elio_lucas/view/menu.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -402,8 +403,14 @@ class _Calendario extends State<Calendario> {
                           "minuto": minuto,
                           "usuario": id
                         });
-                        Navigator.pushReplacementNamed(context, '/menu',
-                            arguments: id);
+                         Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeState(
+                        uid: id.toString(),
+                      )));
+  //                      Navigator.pushReplacementNamed(context, '/menu',
+  //                          arguments: id);
                       });
                     },
                   ),
