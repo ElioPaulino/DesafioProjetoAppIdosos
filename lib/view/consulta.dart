@@ -90,17 +90,17 @@ class _Calendario extends State<Consulta> {
                   SizedBox(width: 5),
                   Flexible(
                       child: TextField(
-                    controller: numero,
-                    decoration: InputDecoration(
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black)),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                        labelText: 'Número',
-                        labelStyle: TextStyle(color: Colors.black)),
-                    style: TextStyle(color: Colors.black),
-                  ))
+                          controller: numero,
+                          decoration: InputDecoration(
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                              labelText: 'Número',
+                              labelStyle: TextStyle(color: Colors.black)),
+                          style: TextStyle(color: Colors.black),
+                          keyboardType: TextInputType.number))
                 ]),
                 SizedBox(height: 30),
                 TextField(
@@ -349,12 +349,7 @@ class _Calendario extends State<Consulta> {
                           "minuto": minuto,
                           "usuario": id
                         });
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeState(
-                                      uid: id.toString(),
-                                    )));
+                        Navigator.pop(context);
 //                          Navigator.pushReplacementNamed(context, '/menu',
 //                              arguments: id);
                       });

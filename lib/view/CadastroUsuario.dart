@@ -94,7 +94,7 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
                       title: Text("Masculino",
                           style: TextStyle(color: Colors.yellow)),
                       activeColor: Colors.yellow,
-                      value: "M",
+                      value: "Masculino",
                       groupValue: sexo,
                       onChanged: (String? valor) {
                         setState(() {
@@ -105,7 +105,7 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
                       title: Text("Feminino",
                           style: TextStyle(color: Colors.yellow)),
                       activeColor: Colors.yellow,
-                      value: "F",
+                      value: "Feminino",
                       groupValue: sexo,
                       onChanged: (String? valor) {
                         setState(() {

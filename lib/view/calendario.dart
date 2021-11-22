@@ -403,14 +403,9 @@ class _Calendario extends State<Calendario> {
                           "minuto": minuto,
                           "usuario": id
                         });
-                         Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeState(
-                        uid: id.toString(),
-                      )));
-  //                      Navigator.pushReplacementNamed(context, '/menu',
-  //                          arguments: id);
+                        Navigator.pop(context);
+                        //                      Navigator.pushReplacementNamed(context, '/menu',
+                        //                          arguments: id);
                       });
                     },
                   ),

@@ -182,6 +182,8 @@ class _HomeState extends State<HomeState> {
                               stream: FirebaseFirestore.instance
                                   .collection('Remedios')
                                   .where("usuario", isEqualTo: id.toString())
+                                  .orderBy("hora")
+                                  .orderBy("minuto")
                                   .where(
                                       (index == 0
                                           ? "segunda"
@@ -274,6 +276,9 @@ class _HomeState extends State<HomeState> {
                               stream: FirebaseFirestore.instance
                                   .collection('Consulta')
                                   .where("usuario", isEqualTo: id.toString())
+                                  .orderBy("ano")
+                                  .orderBy("mes")
+                                  .orderBy("dia")
                                   .snapshots(),
                               builder: (context, snapshot) {
                                 switch (snapshot.connectionState) {
